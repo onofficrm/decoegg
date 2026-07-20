@@ -1,0 +1,9 @@
+# 홈은 PHP(DB) 없이 정적 랜딩을 우선 제공합니다.
+# MySQL 장애로 PHP-FPM이 막혀도 / 가 열리도록 index.html 을 index.php 보다 앞에 둡니다.
+DirectoryIndex index.html index.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # 루트(/)만 정적 홈으로 고정 (하위 PHP 경로는 그대로)
+  RewriteRule ^$ index.html [L]
+</IfModule>
