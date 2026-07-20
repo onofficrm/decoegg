@@ -28,6 +28,11 @@
 
 body {
   @apply bg-brand-bg text-brand-body font-sans antialiased;
+  scroll-padding-top: 6.5rem;
+}
+
+section[id] {
+  scroll-margin-top: 6.5rem;
 }
 
 h1, h2, h3, h4, h5, h6 {

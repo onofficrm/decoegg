@@ -69,8 +69,9 @@ export default function App() {
     <div className="min-h-screen flex flex-col bg-brand-bg pb-[72px] md:pb-0">
       <Header />
       
-      <main className="flex-grow pt-24">
+      <main className="flex-grow">
         <Hero />
+        <div className="relative z-10">
         <DiagnosticSection onSelectStatus={handleStatusSelect} />
         <StatusGuideSection onSelectStatus={handleStatusSelect} />
         <DashboardSection />
@@ -91,6 +92,7 @@ export default function App() {
         <ConsultReportSection />
         <FAQSection />
         <FinalCTASection />
+        </div>
       </main>
 
       <Footer />
