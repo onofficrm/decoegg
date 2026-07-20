@@ -179,6 +179,53 @@ $message = isset($_POST['message']) ? trim(strip_tags($_POST['message'])) : '';
 $privacy = !empty($_POST['privacy_agree']) ? '동의' : '미동의';
 $referer_page = isset($_POST['referer_page']) ? trim(strip_tags($_POST['referer_page'])) : '';
 
+/* 빌더(한도폭발카) 조건 확인 폼 확장 필드 */
+$extra_fields = array(
+    'status'         => isset($_POST['status']) ? trim(strip_tags($_POST['status'])) : '',
+    'incomeType'     => isset($_POST['incomeType']) ? trim(strip_tags($_POST['incomeType'])) : '',
+    'incomeRange'    => isset($_POST['incomeRange']) ? trim(strip_tags($_POST['incomeRange'])) : '',
+    'vehicleType'    => isset($_POST['vehicleType']) ? trim(strip_tags($_POST['vehicleType'])) : '',
+    'monthlyPayment' => isset($_POST['monthlyPayment']) ? trim(strip_tags($_POST['monthlyPayment'])) : '',
+    'purpose'        => isset($_POST['purpose']) ? trim(strip_tags($_POST['purpose'])) : '',
+    'region'         => isset($_POST['region']) ? trim(strip_tags($_POST['region'])) : '',
+    'availableTime'  => isset($_POST['availableTime']) ? trim(strip_tags($_POST['availableTime'])) : '',
+    'agreeThirdParty'=> !empty($_POST['agreeThirdParty']) ? '동의' : '미동의',
+    'source'         => isset($_POST['source']) ? trim(strip_tags($_POST['source'])) : '',
+);
+
+$extra_labels = array(
+    'status'          => '현재 상태',
+    'incomeType'      => '소득 형태',
+    'incomeRange'     => '월 소득 구간',
+    'vehicleType'     => '원하는 차량',
+    'monthlyPayment'  => '원하는 월 납입금',
+    'purpose'         => '상담 목적',
+    'region'          => '거주 지역',
+    'availableTime'   => '상담 가능 시간',
+    'agreeThirdParty' => '제3자 제공 동의',
+    'source'          => '유입 경로',
+);
+
+$extra_lines = array();
+foreach ($extra_labels as $key => $label) {
+    if ($key === 'agreeThirdParty') {
+        $extra_lines[] = $label . ': ' . $extra_fields[$key];
+        continue;
+    }
+    if ($extra_fields[$key] !== '') {
+        $extra_lines[] = $label . ': ' . $extra_fields[$key];
+    }
+}
+
+if ($extra_lines) {
+    $structured = "■ 조건 확인 정보\n" . implode("\n", $extra_lines);
+    if ($message !== '') {
+        $message = $structured . "\n\n--- 추가 문의 ---\n\n" . $message;
+    } else {
+        $message = $structured;
+    }
+}
+
 if ($name === '') {
     onoff_inquiry_json_response(false, '이름을 입력해 주세요.');
 }
@@ -262,6 +309,10 @@ $wr_4 = sql_real_escape_string($privacy);
 $wr_ip = sql_real_escape_string(isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '');
 $wr_5 = $wr_ip;
 $wr_6 = sql_real_escape_string('신규');
+$wr_9_source = $extra_fields['source'] !== '' ? $extra_fields['source'] : 'web-form';
+$wr_9 = sql_real_escape_string(function_exists('mb_substr') ? mb_substr($wr_9_source, 0, 50, 'UTF-8') : substr($wr_9_source, 0, 50));
+$wr_7 = sql_real_escape_string($extra_fields['status'] !== '' ? $extra_fields['status'] : '');
+$wr_8 = sql_real_escape_string($extra_fields['purpose'] !== '' ? $extra_fields['purpose'] : '');
 
 $wr_option = '';
 if (!empty($board['bo_use_secret'])) {
@@ -308,9 +359,9 @@ $sql = " insert into {$write_table}
                  wr_4 = '{$wr_4}',
                  wr_5 = '{$wr_5}',
                  wr_6 = '{$wr_6}',
-                 wr_7 = '',
-                 wr_8 = '',
-                 wr_9 = '',
+                 wr_7 = '{$wr_7}',
+                 wr_8 = '{$wr_8}',
+                 wr_9 = '{$wr_9}',
                  wr_10 = '' ";
 
 $result = sql_query($sql, false);

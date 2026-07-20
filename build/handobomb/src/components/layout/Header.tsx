@@ -6,12 +6,12 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: '할부 가능성 확인', href: '#' },
-    { name: '차량 찾기', href: '#' },
-    { name: '추가자금 상담', href: '#' },
-    { name: '진행 절차', href: '#' },
-    { name: '상담 사례', href: '#' },
-    { name: '자주 묻는 질문', href: '#' },
+    { name: '월납 시뮬', href: '#payment-simulator' },
+    { name: '조건 확인', href: '#consult-form' },
+    { name: '차량 찾기', href: '#garage' },
+    { name: '추가자금', href: '#finance' },
+    { name: '진행 절차', href: '#process' },
+    { name: 'FAQ', href: '#faq' },
   ];
 
   return (

@@ -53,7 +53,7 @@ export function ProcessTimelineSection() {
   ];
 
   return (
-    <section className="py-24 bg-[#0A0C10] border-t border-white/5 relative overflow-hidden">
+    <section id="process" className="py-24 bg-[#0A0C10] border-t border-white/5 relative overflow-hidden">
       
       {/* Background Decor */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-brand-yellow/5 rounded-full blur-[100px] pointer-events-none"></div>

@@ -8,9 +8,9 @@ export function MobileBottomNav() {
           <Home className="w-6 h-6 mb-1" />
           <span className="text-[10px] font-bold">홈</span>
         </a>
-        <a href="#consult-form" className="flex-1 flex flex-col items-center justify-center text-brand-body hover:text-white transition-colors h-full">
+        <a href="#payment-simulator" className="flex-1 flex flex-col items-center justify-center text-brand-body hover:text-white transition-colors h-full">
           <FileSearch className="w-6 h-6 mb-1" />
-          <span className="text-[10px] font-bold">조건 확인</span>
+          <span className="text-[10px] font-bold">월납 계산</span>
         </a>
         <a href="tel:18004959" className="flex-1 flex flex-col items-center justify-center text-brand-orange h-full">
           <Phone className="w-6 h-6 mb-1" />

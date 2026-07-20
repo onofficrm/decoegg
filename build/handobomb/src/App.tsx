@@ -7,6 +7,7 @@ import { DashboardSection } from './components/layout/DashboardSection';
 import { LiveConsultingDashboard } from './components/layout/LiveConsultingDashboard';
 import { ConsultingStatsDashboard } from './components/layout/ConsultingStatsDashboard';
 import { FinanceSection } from './components/layout/FinanceSection';
+import { PaymentSimulatorSection } from './components/layout/PaymentSimulatorSection';
 import { CustomerCheckpointsSection } from './components/layout/CustomerCheckpointsSection';
 import { VehicleGarageSection } from './components/layout/VehicleGarageSection';
 import { ConsultStatusSection } from './components/layout/ConsultStatusSection';
@@ -39,6 +40,7 @@ export default function App() {
         <DiagnosticSection onSelectStatus={handleStatusSelect} />
         <DashboardSection />
         <FinanceSection />
+        <PaymentSimulatorSection />
         <ConsultForm initialStatus={selectedStatus} />
         <LiveConsultingDashboard />
         <ConsultingStatsDashboard />

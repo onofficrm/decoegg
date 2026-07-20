@@ -103,13 +103,62 @@ export function ConsultForm({ initialStatus = '' }: ConsultFormProps) {
 
   const handleSubmit = async () => {
     if (!validateStep()) return;
-    
+
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
+    setError('');
+
+    try {
+      const tokenRes = await fetch('/proc/inquiry-token.php', {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: { Accept: 'application/json' },
+      });
+      const tokenData = await tokenRes.json();
+      if (!tokenData?.success || !tokenData?.token) {
+        throw new Error(tokenData?.message || '보안 토큰을 가져오지 못했습니다. 페이지를 새로고침해 주세요.');
+      }
+
+      const body = new FormData();
+      body.append('onoff_inquiry_token', tokenData.token);
+      body.append('name', formData.name.trim());
+      body.append('phone', formData.phone.trim());
+      body.append('message', formData.message.trim());
+      body.append('privacy_agree', '1');
+      body.append('referer_page', window.location.href);
+      body.append('website_url', ''); // honeypot
+      body.append('status', formData.status);
+      body.append('incomeType', formData.incomeType);
+      body.append('incomeRange', formData.incomeRange);
+      body.append('vehicleType', formData.vehicleType);
+      body.append('monthlyPayment', formData.monthlyPayment);
+      body.append('purpose', formData.purpose);
+      body.append('region', formData.region);
+      body.append('availableTime', formData.availableTime);
+      body.append('source', 'handobomb-home');
+      if (formData.agreeThirdParty) {
+        body.append('agreeThirdParty', '1');
+      }
+
+      const submitUrl = tokenData.action || '/proc/inquiry-submit.php';
+      const submitRes = await fetch(submitUrl, {
+        method: 'POST',
+        body,
+        credentials: 'same-origin',
+        headers: { Accept: 'application/json' },
+      });
+      const result = await submitRes.json();
+
+      if (!result?.success) {
+        throw new Error(result?.message || '접수에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+      }
+
+      setStep(5);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : '접수 중 오류가 발생했습니다.';
+      setError(msg);
+    } finally {
       setIsSubmitting(false);
-      setStep(5); // Success step
-    }, 1500);
+    }
   };
 
   const renderProgressBar = () => {

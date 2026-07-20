@@ -69,7 +69,7 @@ export function FAQSection() {
   };
 
   return (
-    <section className="py-24 bg-brand-bg relative border-t border-white/5">
+    <section id="faq" className="py-24 bg-brand-bg relative border-t border-white/5">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="text-center mb-16">

@@ -31,7 +31,7 @@ export function FinanceSection() {
   ];
 
   return (
-    <section className="py-24 bg-[#0A0C10] border-t border-white/5 relative overflow-hidden">
+    <section id="finance" className="py-24 bg-[#0A0C10] border-t border-white/5 relative overflow-hidden">
       {/* Background Effect */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-[400px] bg-brand-yellow/5 rounded-full blur-[120px] pointer-events-none"></div>
 
