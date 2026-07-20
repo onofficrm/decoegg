@@ -1,5 +1,12 @@
 [
   {
+    "id": "handobomb",
+    "name": "한도폭발카",
+    "path": "handobomb",
+    "entry": "index.html",
+    "created_at": "2026-07-20 18:20:00"
+  },
+  {
     "id": "sample-landing",
     "name": "[샘플] 랜딩 페이지 (비활성)",
     "path": "sample-landing",

@@ -1,0 +1,54 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg: #0D1015;
+  --color-brand-card: #171B22;
+  --color-brand-yellow: #E8FF3F;
+  --color-brand-orange: #FF5A1F;
+  --color-brand-green: #10B981;
+  --color-brand-title: #FFFFFF;
+  --color-brand-body: #9CA3AF;
+
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  --font-display: "Space Grotesk", "Pretendard Variable", sans-serif;
+
+  --animate-scroll-y: scroll-y 25s linear infinite;
+  @keyframes scroll-y {
+    to { transform: translateY(calc(-50% - 0.5rem)); }
+  }
+}
+
+@media (max-width: 768px) {
+  .animate-scroll-y {
+    animation-duration: 35s !important;
+  }
+}
+
+body {
+  @apply bg-brand-bg text-brand-body font-sans antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply text-brand-title font-bold tracking-tight;
+}
+
+/* Custom Design Elements */
+.clip-chamfer {
+  clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+}
+
+.clip-chamfer-reverse {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+}
+
+.dashboard-glow {
+  box-shadow: 0 0 24px rgba(232, 255, 63, 0.15);
+}
+
+.dashboard-border {
+  background: linear-gradient(#171B22, #171B22) padding-box,
+              linear-gradient(135deg, rgba(232, 255, 63, 0.4), rgba(255, 90, 31, 0.1)) border-box;
+  border: 1px solid transparent;
+}

@@ -4,3 +4,5 @@ data/dbconfig.local.php
 .env
 .env.*
 *.log
+**/node_modules/
+build/**/dist/

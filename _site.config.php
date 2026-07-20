@@ -109,7 +109,7 @@ $site_config = array(
     'icrm_hub_enabled'          => true,
     'icrm_hub_geo_button'       => true,
     /* onoff-builder-bridge — 루트 / 를 빌더 페이지로 (project_id) */
-    'home_builder_bridge_id'    => '',
+    'home_builder_bridge_id'    => 'handobomb',
 );
 
 /**

@@ -1,0 +1,6 @@
+{
+  "name": "한도폭발카",
+  "description": "개인회생, 저신용자를 위한 전문 중고차 할부 상담 홈페이지",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
