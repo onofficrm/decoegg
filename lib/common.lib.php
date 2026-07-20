@@ -1861,6 +1861,21 @@ function sql_connect($host, $user, $pass, $db=G5_MYSQL_DB)
 
     if(function_exists('mysqli_connect') && G5_MYSQLI_USE) {
         mysqli_report(MYSQLI_REPORT_OFF);
+        // 원격 DB 장애 시 게이트웨이 타임아웃(504) 대신 빠르게 실패하도록 제한
+        if (function_exists('mysqli_init') && function_exists('mysqli_options') && function_exists('mysqli_real_connect')) {
+            $mysqli = mysqli_init();
+            if ($mysqli) {
+                if (defined('MYSQLI_OPT_CONNECT_TIMEOUT')) {
+                    @mysqli_options($mysqli, MYSQLI_OPT_CONNECT_TIMEOUT, 5);
+                }
+                $ok = @mysqli_real_connect($mysqli, $host, $user, $pass, $db);
+                if ($ok) {
+                    return $mysqli;
+                }
+            }
+            die('MySQL Connect Error!!!');
+        }
+
         $link = @mysqli_connect($host, $user, $pass, $db) or die('MySQL Host, User, Password, DB 정보에 오류가 있습니다.');
 
         // 연결 오류 발생 시 스크립트 종료
