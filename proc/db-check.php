@@ -73,9 +73,15 @@ if (!function_exists('mysqli_init')) {
     exit;
 }
 
+$connect_host = $host;
+if (!filter_var($host, FILTER_VALIDATE_IP) && stripos($host, 'sldb.iwinv.net') !== false) {
+    $connect_host = '115.68.169.38';
+}
+$result['connect_host'] = $connect_host;
+
 $mysqli = mysqli_init();
 @mysqli_options($mysqli, MYSQLI_OPT_CONNECT_TIMEOUT, 3);
-$ok = @mysqli_real_connect($mysqli, $host, $user, $pass, $db);
+$ok = @mysqli_real_connect($mysqli, $connect_host, $user, $pass, $db);
 $result['elapsed_ms'] = (int) round((microtime(true) - $started) * 1000);
 
 if ($ok) {

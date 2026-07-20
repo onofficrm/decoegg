@@ -1865,6 +1865,17 @@ function sql_connect($host, $user, $pass, $db=G5_MYSQL_DB)
         mysqli_report(MYSQLI_REPORT_OFF);
     }
 
+    // iwinv 공유 DB 호스트명 DNS 지연 회피 (A 레코드 고정)
+    $connect_host = $host;
+    if (!filter_var($host, FILTER_VALIDATE_IP)) {
+        if (defined('G5_MYSQL_HOST_IP') && G5_MYSQL_HOST_IP !== '') {
+            $connect_host = G5_MYSQL_HOST_IP;
+        } elseif (stripos($host, 'sldb.iwinv.net') !== false) {
+            // wuk2002.sldb.iwinv.net → 115.68.169.38 (2026-07 기준)
+            $connect_host = '115.68.169.38';
+        }
+    }
+
     if(function_exists('mysqli_connect') && G5_MYSQLI_USE) {
         // 원격 DB 장애 시 게이트웨이 타임아웃(504) 대신 빠르게 실패하도록 제한
         if (function_exists('mysqli_init') && function_exists('mysqli_options') && function_exists('mysqli_real_connect')) {
@@ -1876,29 +1887,29 @@ function sql_connect($host, $user, $pass, $db=G5_MYSQL_DB)
                 if (defined('MYSQLI_OPT_READ_TIMEOUT')) {
                     @mysqli_options($mysqli, MYSQLI_OPT_READ_TIMEOUT, 5);
                 }
-                $ok = @mysqli_real_connect($mysqli, $host, $user, $pass, $db);
+                $ok = @mysqli_real_connect($mysqli, $connect_host, $user, $pass, $db);
                 if ($ok) {
                     return $mysqli;
                 }
                 $errno = function_exists('mysqli_connect_errno') ? (int) mysqli_connect_errno() : 0;
                 $err = function_exists('mysqli_connect_error') ? (string) mysqli_connect_error() : '';
-                onoff_mysql_connect_fail($host, $errno, $err);
+                onoff_mysql_connect_fail($host . ($connect_host !== $host ? " (via {$connect_host})" : ''), $errno, $err);
             }
             onoff_mysql_connect_fail($host, 0, 'mysqli_init failed');
         }
 
-        $link = @mysqli_connect($host, $user, $pass, $db);
+        $link = @mysqli_connect($connect_host, $user, $pass, $db);
         if ($link) {
             return $link;
         }
         $errno = function_exists('mysqli_connect_errno') ? (int) mysqli_connect_errno() : 0;
         $err = function_exists('mysqli_connect_error') ? (string) mysqli_connect_error() : '';
-        onoff_mysql_connect_fail($host, $errno, $err);
+        onoff_mysql_connect_fail($host . ($connect_host !== $host ? " (via {$connect_host})" : ''), $errno, $err);
     } else {
         if (!function_exists('mysql_connect')) {
             die('MySQL이 설치되지 않아 mysql_connect 함수를 사용할 수 없습니다.');
         }
-        $link = @mysql_connect($host, $user, $pass);
+        $link = @mysql_connect($connect_host, $user, $pass);
         if (!$link) {
             onoff_mysql_connect_fail($host, 0, 'mysql_connect failed');
         }
