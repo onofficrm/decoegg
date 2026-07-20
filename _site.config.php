@@ -47,6 +47,8 @@ $site_config = array(
     'cases_bo_table'          => 'cases',
     /* 추천 차량 갤러리 (proc/vehicles-list.php → 홈 SPA) */
     'vehicles_bo_table'       => 'vehicles',
+    /* FAQ 게시판 (proc/faq-list.php → 홈 SPA) */
+    'faq_bo_table'            => 'faq',
     /* 전환·방문 추적 ID — 비우면 출력 안 함 */
     'gtm_id'              => '',
     'ga4_id'              => '',

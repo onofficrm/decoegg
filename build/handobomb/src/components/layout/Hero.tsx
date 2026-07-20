@@ -1,7 +1,9 @@
 import { ArrowRight, Phone, MessageCircle, ShieldCheck, Gauge, Zap } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { getConsultAvailability } from '../../lib/consultAvailability';
 
 export function Hero() {
+  const availability = getConsultAvailability();
   const statusTags = [
     '개인회생 진행 중',
     '저신용 직장인',
@@ -24,9 +26,21 @@ export function Hero() {
           
           {/* Left Column: Content */}
           <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-yellow/10 text-brand-yellow font-bold text-sm border border-brand-yellow/20">
-              <Zap className="w-4 h-4" />
-              <span>개인회생·저신용 중고차 할부 전문상담</span>
+            <div className="flex flex-wrap gap-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-yellow/10 text-brand-yellow font-bold text-sm border border-brand-yellow/20">
+                <Zap className="w-4 h-4" />
+                <span>개인회생·저신용 중고차 할부 전문상담</span>
+              </div>
+              <div
+                className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-bold text-sm border ${
+                  availability.open
+                    ? 'bg-brand-green/15 text-brand-green border-brand-green/30'
+                    : 'bg-white/5 text-brand-body border-white/10'
+                }`}
+              >
+                <span className={`w-2 h-2 rounded-full ${availability.open ? 'bg-brand-green animate-pulse' : 'bg-brand-body'}`} />
+                <span>{availability.label}</span>
+              </div>
             </div>
             
             <div className="space-y-4">
@@ -46,6 +60,7 @@ export function Hero() {
                 신용점수 하나만 보고 가능 여부를 판단하지 않습니다.<br />
                 개인회생 진행 상태, 현재 소득, 재직 기간, 차량 용도와 월 납입 가능 금액을 종합적으로 확인하여 고객의 현재 조건에서 검토할 수 있는 중고차 구매 방법을 안내합니다.
               </p>
+              <p className="text-sm text-brand-body/70">{availability.detail}</p>
             </div>
 
             {/* Status Tags */}
@@ -59,7 +74,7 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button variant="primary" size="lg" className="w-full sm:w-auto">
+              <Button variant="primary" size="lg" className="w-full sm:w-auto" onClick={() => document.getElementById('consult-form')?.scrollIntoView({ behavior: 'smooth' })}>
                 내 차량구매 조건 확인하기 <ArrowRight className="w-5 h-5 ml-1" />
               </Button>
               <Button variant="accent" size="lg" className="w-full sm:w-auto" onClick={() => window.location.href = 'tel:18004959'}>

@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Phone, MessageCircle, ArrowRight, Menu, X } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { getConsultAvailability } from '../../lib/consultAvailability';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const availability = getConsultAvailability();
 
   const navLinks = [
     { name: '월납 시뮬', href: '#payment-simulator' },
@@ -19,7 +21,7 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="h-24 flex items-center justify-between">
           {/* Logo */}
-          <div className="flex flex-col justify-center cursor-pointer mt-1">
+          <div className="flex flex-col justify-center cursor-pointer mt-1" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <div className="flex items-center">
               <span className="font-display font-black text-2xl md:text-3xl tracking-tighter text-white italic">
                 한도폭발
@@ -54,6 +56,16 @@ export function Header() {
 
           {/* Desktop CTA Buttons */}
           <div className="hidden lg:flex items-center gap-3">
+            <span
+              className={`hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold border ${
+                availability.open
+                  ? 'bg-brand-green/15 text-brand-green border-brand-green/30'
+                  : 'bg-white/5 text-brand-body border-white/10'
+              }`}
+            >
+              <span className={`w-1.5 h-1.5 rounded-full ${availability.open ? 'bg-brand-green animate-pulse' : 'bg-brand-body'}`} />
+              {availability.label}
+            </span>
             <Button variant="accent" size="sm" onClick={() => window.location.href = 'tel:18004959'}>
               <Phone className="w-4 h-4" />
               1800-4959

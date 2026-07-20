@@ -19,6 +19,7 @@ import { ConsultForm } from './components/layout/ConsultForm';
 import { FinalCTASection } from './components/layout/FinalCTASection';
 import { MobileBottomNav } from './components/layout/MobileBottomNav';
 import { PCFloatingNav } from './components/layout/PCFloatingNav';
+import { ExitIntentPopup } from './components/layout/ExitIntentPopup';
 
 export default function App() {
   const [selectedStatus, setSelectedStatus] = useState<string>('');
@@ -72,6 +73,7 @@ export default function App() {
       <Footer />
       <MobileBottomNav />
       <PCFloatingNav />
+      <ExitIntentPopup />
     </div>
   );
 }
