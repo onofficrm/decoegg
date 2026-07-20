@@ -1859,37 +1859,88 @@ function sql_connect($host, $user, $pass, $db=G5_MYSQL_DB)
 {
     global $g5;
 
-    if(function_exists('mysqli_connect') && G5_MYSQLI_USE) {
+    // DNS/원격 DB 지연 시 PHP·게이트웨이가 장시간 대기하지 않도록 제한
+    @ini_set('default_socket_timeout', '3');
+    if (function_exists('mysqli_report')) {
         mysqli_report(MYSQLI_REPORT_OFF);
+    }
+
+    if(function_exists('mysqli_connect') && G5_MYSQLI_USE) {
         // 원격 DB 장애 시 게이트웨이 타임아웃(504) 대신 빠르게 실패하도록 제한
         if (function_exists('mysqli_init') && function_exists('mysqli_options') && function_exists('mysqli_real_connect')) {
             $mysqli = mysqli_init();
             if ($mysqli) {
                 if (defined('MYSQLI_OPT_CONNECT_TIMEOUT')) {
-                    @mysqli_options($mysqli, MYSQLI_OPT_CONNECT_TIMEOUT, 5);
+                    @mysqli_options($mysqli, MYSQLI_OPT_CONNECT_TIMEOUT, 3);
+                }
+                if (defined('MYSQLI_OPT_READ_TIMEOUT')) {
+                    @mysqli_options($mysqli, MYSQLI_OPT_READ_TIMEOUT, 5);
                 }
                 $ok = @mysqli_real_connect($mysqli, $host, $user, $pass, $db);
                 if ($ok) {
                     return $mysqli;
                 }
+                $errno = function_exists('mysqli_connect_errno') ? (int) mysqli_connect_errno() : 0;
+                $err = function_exists('mysqli_connect_error') ? (string) mysqli_connect_error() : '';
+                onoff_mysql_connect_fail($host, $errno, $err);
             }
-            die('MySQL Connect Error!!!');
+            onoff_mysql_connect_fail($host, 0, 'mysqli_init failed');
         }
 
-        $link = @mysqli_connect($host, $user, $pass, $db) or die('MySQL Host, User, Password, DB 정보에 오류가 있습니다.');
-
-        // 연결 오류 발생 시 스크립트 종료
-        if (mysqli_connect_errno()) {
-            die('Connect Error: '.mysqli_connect_error());
+        $link = @mysqli_connect($host, $user, $pass, $db);
+        if ($link) {
+            return $link;
         }
+        $errno = function_exists('mysqli_connect_errno') ? (int) mysqli_connect_errno() : 0;
+        $err = function_exists('mysqli_connect_error') ? (string) mysqli_connect_error() : '';
+        onoff_mysql_connect_fail($host, $errno, $err);
     } else {
         if (!function_exists('mysql_connect')) {
             die('MySQL이 설치되지 않아 mysql_connect 함수를 사용할 수 없습니다.');
         }
-        $link = mysql_connect($host, $user, $pass) or die('MySQL Host, User, Password 정보에 오류가 있습니다.');
+        $link = @mysql_connect($host, $user, $pass);
+        if (!$link) {
+            onoff_mysql_connect_fail($host, 0, 'mysql_connect failed');
+        }
+        return $link;
     }
 
-    return $link;
+    return null;
+}
+
+/**
+ * DB 연결 실패 시 안내 (관리자/로그인 등 PHP 페이지용)
+ */
+function onoff_mysql_connect_fail($host, $errno, $err)
+{
+    if (!headers_sent()) {
+        http_response_code(503);
+        header('Content-Type: text/html; charset=utf-8');
+        header('Retry-After: 60');
+    }
+    $host_safe = htmlspecialchars((string) $host, ENT_QUOTES, 'UTF-8');
+    $err_safe = htmlspecialchars(trim((string) $err), ENT_QUOTES, 'UTF-8');
+    $errno_safe = (int) $errno;
+    echo '<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
+    echo '<title>DB 연결 실패</title>';
+    echo '<style>body{font-family:sans-serif;background:#0d1015;color:#e8e8e8;padding:40px;line-height:1.6}';
+    echo 'code{background:#1a1f28;padding:2px 6px;border-radius:4px}.box{max-width:640px;margin:0 auto;border:1px solid #333;padding:24px;border-radius:8px}';
+    echo 'h1{color:#E8FF3F;font-size:1.25rem}li{margin:8px 0}</style></head><body><div class="box">';
+    echo '<h1>MySQL 데이터베이스에 연결할 수 없습니다</h1>';
+    echo '<p>관리자(<code>/adm</code>)·게시판·상담 API는 DB 연결이 필요합니다.</p>';
+    echo '<ul>';
+    echo '<li>호스트: <code>' . $host_safe . '</code></li>';
+    if ($errno_safe) {
+        echo '<li>오류 코드: <code>' . $errno_safe . '</code></li>';
+    }
+    if ($err_safe !== '') {
+        echo '<li>메시지: <code>' . $err_safe . '</code></li>';
+    }
+    echo '</ul>';
+    echo '<p><strong>조치:</strong> iwinv(또는 DB 패널)에서 MySQL <em>원격 접속</em>을 허용하고, 웹서버 IP <code>115.68.168.240</code> 를 허용 목록에 추가하세요.</p>';
+    echo '<p>점검: <a href="/proc/db-check.php" style="color:#E8FF3F">/proc/db-check.php</a></p>';
+    echo '</div></body></html>';
+    exit;
 }
 
 

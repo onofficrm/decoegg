@@ -1,9 +1,11 @@
 # 이 호스팅은 .html 요청이 PHP로 넘어가 MySQL 대기(504)에 걸립니다.
 # 정적 랜딩은 css/landing/*.txt + text/html 로 제공합니다. (페이지별 SEO 셸)
-DirectoryIndex css/landing/home.txt css/landing.txt index.php
+# DirectoryIndex 는 index.php 만 — /adm 등 하위 디렉터리가 랜딩 파일로 가지 않게 함
+DirectoryIndex index.php
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # 홈만 정적 랜딩 ( /adm /bbs /proc 등은 PHP 그대로 )
   RewriteRule ^$ css/landing/home.txt [L,T=text/html]
   RewriteRule ^payment-simulator/?$ css/landing/payment-simulator.txt [L,T=text/html]
   RewriteRule ^consult/?$ css/landing/consult.txt [L,T=text/html]

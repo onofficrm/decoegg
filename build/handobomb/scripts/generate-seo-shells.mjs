@@ -183,10 +183,11 @@ Sitemap: ${pagesFile.siteUrl}/sitemap.xml
 
   const htaccess = `# 이 호스팅은 .html 요청이 PHP로 넘어가 MySQL 대기(504)에 걸립니다.
 # 정적 랜딩은 css/landing/*.txt + text/html 로 제공합니다. (페이지별 SEO 셸)
-DirectoryIndex css/landing/home.txt css/landing.txt index.php
+DirectoryIndex index.php
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # 홈만 정적 랜딩 ( /adm /bbs /proc 등은 PHP 그대로 )
   RewriteRule ^$ css/landing/home.txt [L,T=text/html]
 ${rewriteLines}
 </IfModule>
