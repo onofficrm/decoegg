@@ -8,7 +8,6 @@ import { LiveConsultingDashboard } from './components/layout/LiveConsultingDashb
 import { ConsultingStatsDashboard } from './components/layout/ConsultingStatsDashboard';
 import { FinanceSection } from './components/layout/FinanceSection';
 import { PaymentSimulatorSection, SimulatorPrefill } from './components/layout/PaymentSimulatorSection';
-import { CustomerCheckpointsSection } from './components/layout/CustomerCheckpointsSection';
 import { VehicleGarageSection } from './components/layout/VehicleGarageSection';
 import { ConsultStatusSection } from './components/layout/ConsultStatusSection';
 import { ProcessTimelineSection } from './components/layout/ProcessTimelineSection';
@@ -61,6 +60,7 @@ export default function App() {
           initialMessage={simPrefill.message}
           prefillKey={prefillKey}
         />
+        <ConsultStatusSection />
         <LiveConsultingDashboard />
         <ConsultingStatsDashboard />
         <VehicleGarageSection />

@@ -91,12 +91,11 @@ export function ConsultForm({
         setError('원하는 월 납입금을 선택해주세요.');
         return false;
       }
-    } else if (step === 3) {
       if (!formData.purpose) {
         setError('상담 목적을 선택해주세요.');
         return false;
       }
-    } else if (step === 4) {
+    } else if (step === 3) {
       if (!formData.name.trim()) {
         setError('이름을 입력해주세요.');
         return false;
@@ -181,7 +180,7 @@ export function ConsultForm({
         throw new Error(result?.message || '접수에 실패했습니다. 잠시 후 다시 시도해 주세요.');
       }
 
-      setStep(5);
+      setStep(4);
     } catch (err) {
       const msg = err instanceof Error ? err.message : '접수 중 오류가 발생했습니다.';
       setError(msg);
@@ -191,15 +190,15 @@ export function ConsultForm({
   };
 
   const renderProgressBar = () => {
-    if (step === 5) return null;
+    if (step === 4) return null;
     
-    const steps = ['STEP 1', 'STEP 2', 'STEP 3', '신청 완료'];
+    const steps = ['상태', '조건', '신청'];
     return (
       <div className="flex items-center justify-between mb-8 sm:mb-12 relative">
         <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-white/5 -z-10"></div>
         <div 
           className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-brand-yellow -z-10 transition-all duration-500 ease-out"
-          style={{ width: `${((step - 1) / 3) * 100}%` }}
+          style={{ width: `${((step - 1) / 2) * 100}%` }}
         ></div>
         
         {steps.map((label, index) => {
@@ -328,41 +327,32 @@ export function ConsultForm({
                     </div>
                     {renderSelectButtons('monthlyPayment', selectionOptions.monthlyPayment, 3)}
                   </div>
+
+                  <div>
+                    <div className="mb-6 border-l-2 border-brand-yellow pl-4">
+                      <h3 className="text-xl font-bold text-white mb-2">상담 목적</h3>
+                      <p className="text-sm text-brand-body">가장 필요하신 상담 내용을 선택해주세요.</p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {selectionOptions.purpose.map(option => (
+                        <button
+                          key={option}
+                          onClick={() => updateForm('purpose', option)}
+                          className={`p-4 text-sm sm:text-base font-bold transition-all duration-200 border clip-chamfer text-left
+                            ${formData.purpose === option ? 'bg-brand-yellow/10 border-brand-yellow text-brand-yellow' : 'bg-brand-bg border-white/10 text-brand-body hover:border-brand-yellow/50 hover:text-white'}`}
+                        >
+                          {option}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </motion.div>
               )}
 
-              {/* STEP 3 */}
+              {/* STEP 3: Contact */}
               {step === 3 && (
                 <motion.div
                   key="step3"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="space-y-6"
-                >
-                  <div className="mb-6 border-l-2 border-brand-yellow pl-4">
-                    <h3 className="text-xl font-bold text-white mb-2">상담 목적</h3>
-                    <p className="text-sm text-brand-body">가장 필요하신 상담 내용을 선택해주세요.</p>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {selectionOptions.purpose.map(option => (
-                      <button
-                        key={option}
-                        onClick={() => updateForm('purpose', option)}
-                        className={`p-6 text-lg font-bold transition-all duration-200 border clip-chamfer text-left
-                          ${formData.purpose === option ? 'bg-brand-yellow/10 border-brand-yellow text-brand-yellow shadow-[0_0_20px_rgba(232,255,63,0.1)]' : 'bg-brand-bg border-white/10 text-brand-body hover:border-brand-yellow/30 hover:text-white'}`}
-                      >
-                        {option}
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-
-              {/* STEP 4: Final Info */}
-              {step === 4 && (
-                <motion.div
-                  key="step4"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -439,9 +429,15 @@ export function ConsultForm({
                         onChange={(e) => updateForm('agreePrivacy', e.target.checked)}
                       />
                       <span className="text-sm text-brand-body group-hover:text-white transition-colors">
-                        (필수) 개인정보 수집 및 이용에 동의합니다.
+                        (필수) 개인정보 수집 및 이용에 동의합니다.{' '}
+                        <a href="/page/privacy.php" target="_blank" rel="noreferrer" className="text-brand-yellow underline underline-offset-2" onClick={(e) => e.stopPropagation()}>
+                          개인정보처리방침
+                        </a>
                       </span>
                     </label>
+                    <p className="text-xs text-brand-body/50 pl-8 leading-relaxed">
+                      수집 항목: 이름, 연락처, 거주지역, 상담 조건 · 목적: 할부·차량 상담 응대 · 보관: 상담 완료 후 관련 법령에 따라 파기
+                    </p>
                     
                     <label className="flex items-start gap-3 cursor-pointer group">
                       <div className={`w-5 h-5 shrink-0 mt-0.5 flex items-center justify-center border transition-colors
@@ -462,8 +458,8 @@ export function ConsultForm({
                 </motion.div>
               )}
 
-              {/* STEP 5: Success */}
-              {step === 5 && (
+              {/* STEP 4: Success */}
+              {step === 4 && (
                 <motion.div
                   key="step5"
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -496,7 +492,7 @@ export function ConsultForm({
           </div>
 
           {/* Navigation & Error */}
-          {step < 5 && (
+          {step < 4 && (
             <div className="mt-12 pt-6 border-t border-white/5">
               
               <AnimatePresence>
@@ -519,10 +515,10 @@ export function ConsultForm({
                     <ArrowLeft className="w-4 h-4 mr-2" /> 이전 단계
                   </Button>
                 ) : (
-                  <div></div> // spacer
+                  <div></div>
                 )}
                 
-                {step < 4 ? (
+                {step < 3 ? (
                   <Button variant="primary" onClick={nextStep} className="w-full sm:w-auto">
                     다음 단계 <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
