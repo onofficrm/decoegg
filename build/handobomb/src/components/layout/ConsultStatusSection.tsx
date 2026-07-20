@@ -43,7 +43,7 @@ function getStatusColor(status: string) {
   }
 }
 
-function ConsultRow({ item }: { item: ConsultItem }) {
+function renderConsultRow(item: ConsultItem) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-4 border border-white/5 bg-black/25">
       <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-sm sm:text-base min-w-0">
@@ -77,11 +77,11 @@ export function ConsultStatusSection() {
       .then((data) => {
         if (cancelled || !data?.success) return;
         if (Array.isArray(data.items) && data.items.length > 0) {
-          // Keep ticker dense: pad with samples if board feed is short
+          const boardItems = data.items as ConsultItem[];
           const merged =
-            data.items.length >= 8
-              ? data.items
-              : [...data.items, ...SAMPLE_LIST].slice(0, 12);
+            boardItems.length >= 8
+              ? boardItems
+              : [...boardItems, ...SAMPLE_LIST].slice(0, 12);
           setConsultList(merged);
           setFromBoard(true);
         }
@@ -94,8 +94,7 @@ export function ConsultStatusSection() {
     };
   }, []);
 
-  const tickerItems = useMemo(() => {
-    // Ensure enough rows for a smooth continuous feel
+  const tickerItems = useMemo((): ConsultItem[] => {
     if (consultList.length >= 8) return consultList;
     return [...consultList, ...consultList, ...SAMPLE_LIST].slice(0, 12);
   }, [consultList]);
@@ -128,12 +127,12 @@ export function ConsultStatusSection() {
             >
               <div className="flex flex-col gap-3">
                 {tickerItems.map((item, i) => (
-                  <ConsultRow key={`a-${item.id}-${i}`} item={item} />
+                  <div key={`a-${item.id}-${i}`}>{renderConsultRow(item)}</div>
                 ))}
               </div>
               <div className="flex flex-col gap-3" aria-hidden="true">
                 {tickerItems.map((item, i) => (
-                  <ConsultRow key={`b-${item.id}-${i}`} item={item} />
+                  <div key={`b-${item.id}-${i}`}>{renderConsultRow(item)}</div>
                 ))}
               </div>
             </div>
