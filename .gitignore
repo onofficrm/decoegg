@@ -1,0 +1,6 @@
+.DS_Store
+**/._*
+data/dbconfig.local.php
+.env
+.env.*
+*.log
