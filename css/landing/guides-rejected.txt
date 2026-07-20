@@ -59,8 +59,8 @@
   ]
 }
     </script>
-    <script type="module" crossorigin src="/plugin/onoff-builder-bridge/imports/handobomb/assets/index-9EwZjvtJ.js"></script>
-    <link rel="stylesheet" crossorigin href="/plugin/onoff-builder-bridge/imports/handobomb/assets/index-CLPtlTCS.css">
+    <script type="module" crossorigin src="/plugin/onoff-builder-bridge/imports/handobomb/assets/index-DqUf-bvv.js"></script>
+    <link rel="stylesheet" crossorigin href="/plugin/onoff-builder-bridge/imports/handobomb/assets/index-CitG7tBZ.css">
   </head>
   <body>
     <div id="root"></div>
