@@ -1,8 +1,6 @@
-# 정적 랜딩 우선 (PHP/MySQL 장애 우회)
-DirectoryIndex deco-home.html index.html index.php
+DirectoryIndex css/landing.html index.php
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  # 루트만 정적 HTML로 고정
-  RewriteRule ^$ deco-home.html [L]
+  RewriteRule ^$ css/landing.html [L]
 </IfModule>
