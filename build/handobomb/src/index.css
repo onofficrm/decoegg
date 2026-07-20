@@ -15,8 +15,13 @@
   --font-display: "Space Grotesk", "Pretendard Variable", sans-serif;
 
   --animate-scroll-y: scroll-y 25s linear infinite;
+  --animate-hero-marquee: hero-marquee 38s linear infinite;
   @keyframes scroll-y {
     to { transform: translateY(calc(-50% - 0.5rem)); }
+  }
+  @keyframes hero-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
 }
 
