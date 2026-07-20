@@ -4,8 +4,6 @@ import { Footer } from './components/layout/Footer';
 import { Hero } from './components/layout/Hero';
 import { DiagnosticSection } from './components/layout/DiagnosticSection';
 import { DashboardSection } from './components/layout/DashboardSection';
-import { LiveConsultingDashboard } from './components/layout/LiveConsultingDashboard';
-import { ConsultingStatsDashboard } from './components/layout/ConsultingStatsDashboard';
 import { FinanceSection } from './components/layout/FinanceSection';
 import { PaymentSimulatorSection, SimulatorPrefill } from './components/layout/PaymentSimulatorSection';
 import { VehicleGarageSection } from './components/layout/VehicleGarageSection';
@@ -85,8 +83,6 @@ export default function App() {
           prefillKey={prefillKey}
         />
         <ConsultStatusSection />
-        <LiveConsultingDashboard />
-        <ConsultingStatsDashboard />
         <VehicleGarageSection />
         <ProcessTimelineSection />
         <ConsultReportSection />

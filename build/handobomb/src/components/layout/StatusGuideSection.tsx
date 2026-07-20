@@ -1,4 +1,4 @@
-import { BookOpen, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { focusPage } from '../../lib/sitePages';
 
@@ -57,32 +57,26 @@ interface StatusGuideSectionProps {
 
 export function StatusGuideSection({ onSelectStatus }: StatusGuideSectionProps) {
   return (
-    <section id="guides" className="py-24 bg-[#0A0C10] border-t border-white/5 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-14 max-w-3xl mx-auto">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-brand-yellow/10 text-brand-yellow mb-6">
-            <BookOpen className="w-6 h-6" />
-          </div>
-          <h2 className="text-3xl md:text-5xl font-display font-black text-white mb-6 tracking-tight">
+    <section id="guides" className="py-20 md:py-28 bg-[#0A0C10] border-t border-white/[0.06]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 md:mb-16 max-w-2xl">
+          <p className="text-xs font-medium tracking-[0.2em] uppercase text-brand-yellow/80 mb-4">
+            Guides
+          </p>
+          <h2 className="text-2xl md:text-4xl font-display font-black text-white tracking-tight mb-4">
             상태별 중고차 할부 가이드
           </h2>
-          <p className="text-lg text-brand-body leading-relaxed">
+          <p className="text-base text-brand-body leading-relaxed">
             개인회생·면책·저신용·할부 거절마다 상담 포인트가 다릅니다.
-            <br className="hidden md:block" />
-            내 상황에 맞는 가이드를 확인한 뒤 조건 확인으로 이어가세요.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-0 divide-y divide-white/[0.06] border-t border-white/[0.06]">
           {guides.map((guide) => (
-            <article
-              key={guide.id}
-              id={guide.id}
-              className="bg-brand-card border border-white/5 clip-chamfer p-6 sm:p-8 flex flex-col"
-            >
+            <article key={guide.id} id={guide.id} className="py-10 md:py-12 grid md:grid-cols-[140px_1fr] gap-4 md:gap-10">
               <a
                 href={guide.path}
-                className="text-xs font-bold text-brand-yellow mb-3 hover:underline w-fit"
+                className="text-sm font-bold text-brand-yellow hover:underline w-fit h-fit"
                 onClick={(e) => {
                   e.preventDefault();
                   focusPage(guide.path);
@@ -90,34 +84,31 @@ export function StatusGuideSection({ onSelectStatus }: StatusGuideSectionProps) 
               >
                 {guide.label}
               </a>
-              <h3 className="text-xl sm:text-2xl font-display font-black text-white mb-3 tracking-tight">
-                <a
-                  href={guide.path}
-                  className="hover:text-brand-yellow transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    focusPage(guide.path);
-                  }}
-                >
-                  {guide.title}
-                </a>
-              </h3>
-              <p className="text-brand-body leading-relaxed mb-5">{guide.summary}</p>
-              <ul className="space-y-2 mb-8 text-sm text-brand-body/90">
-                {guide.points.map((point) => (
-                  <li key={point} className="flex gap-2">
-                    <span className="text-brand-yellow font-bold">•</span>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-auto">
-                <Button
-                  variant="outline"
-                  className="w-full sm:w-auto"
-                  onClick={() => onSelectStatus?.(guide.mappedStatus)}
-                >
-                  이 상태로 조건 확인 <ArrowRight className="w-4 h-4 ml-2" />
+
+              <div>
+                <h3 className="text-xl md:text-2xl font-display font-black text-white tracking-tight mb-3">
+                  <a
+                    href={guide.path}
+                    className="hover:text-brand-yellow transition-colors"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      focusPage(guide.path);
+                    }}
+                  >
+                    {guide.title}
+                  </a>
+                </h3>
+                <p className="text-brand-body leading-relaxed mb-5 max-w-2xl">{guide.summary}</p>
+                <ul className="space-y-2 mb-6 text-sm text-white/55">
+                  {guide.points.map((point) => (
+                    <li key={point} className="flex gap-3">
+                      <span className="text-brand-yellow/70 mt-0.5">—</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button variant="ghost" className="!px-0" onClick={() => onSelectStatus?.(guide.mappedStatus)}>
+                  이 상태로 조건 확인 <ArrowRight className="w-4 h-4 ml-1" />
                 </Button>
               </div>
             </article>
