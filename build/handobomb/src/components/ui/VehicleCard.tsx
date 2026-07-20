@@ -1,6 +1,7 @@
 import React from 'react';
 import { Fuel, Info, Phone } from 'lucide-react';
 import { Button } from './Button';
+import { goConsult } from '../../lib/sitePages';
 
 interface VehicleCardProps {
   key?: React.Key;
@@ -80,7 +81,7 @@ export function VehicleCard({
           >
             <Info className="w-4 h-4 mr-1" /> 자세히
           </Button>
-          <Button variant="primary" className="flex-1 text-sm !px-2 py-2" onClick={() => window.location.href = '#consult-form'}>
+          <Button variant="primary" className="flex-1 text-sm !px-2 py-2" onClick={() => goConsult()}>
             할부 상담 <Phone className="w-4 h-4 ml-1" />
           </Button>
         </div>

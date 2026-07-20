@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>현재 진행 중인 상담 현황 | 한도폭발카</title>
+    <meta name="description" content="최근 접수·진행 중인 상담 현황을 익명으로 확인할 수 있습니다." />
+    <meta name="keywords" content="상담현황,중고차할부상담진행" />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://deco-egg.co.kr/consult-status" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:site_name" content="한도폭발카" />
+    <meta property="og:title" content="현재 진행 중인 상담 현황 | 한도폭발카" />
+    <meta property="og:description" content="최근 접수·진행 중인 상담 현황을 익명으로 확인할 수 있습니다." />
+    <meta property="og:url" content="https://deco-egg.co.kr/consult-status" />
+    <meta property="og:image" content="https://deco-egg.co.kr/img/apple-touch-icon.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="현재 진행 중인 상담 현황 | 한도폭발카" />
+    <meta name="twitter:description" content="최근 접수·진행 중인 상담 현황을 익명으로 확인할 수 있습니다." />
+    <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png" />
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0D1015" />
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "한도폭발카",
+      "url": "https://deco-egg.co.kr"
+    },
+    {
+      "@type": "WebPage",
+      "name": "현재 진행 중인 상담 현황 | 한도폭발카",
+      "description": "최근 접수·진행 중인 상담 현황을 익명으로 확인할 수 있습니다.",
+      "url": "https://deco-egg.co.kr/consult-status",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "한도폭발카",
+        "url": "https://deco-egg.co.kr"
+      }
+    },
+    {
+      "@type": "AutoDealer",
+      "name": "한도폭발카",
+      "telephone": "1800-4959",
+      "url": "https://deco-egg.co.kr",
+      "description": "개인회생중고차할부 및 저신용중고차할부 전문상담"
+    },
+    {
+      "@type": "Organization",
+      "name": "한도폭발카",
+      "url": "https://deco-egg.co.kr",
+      "telephone": "1800-4959"
+    }
+  ]
+}
+    </script>
+    <script type="module" crossorigin src="/plugin/onoff-builder-bridge/imports/handobomb/assets/index-BtSbh51P.js"></script>
+    <link rel="stylesheet" crossorigin href="/plugin/onoff-builder-bridge/imports/handobomb/assets/index-Ciun03Um.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <h1>현재 진행 중인 상담 현황 | 한도폭발카</h1>
+      <p>최근 접수·진행 중인 상담 현황을 익명으로 확인할 수 있습니다.</p>
+      <p><a href="/consult">조건 확인 상담</a> · <a href="tel:18004959">1800-4959</a></p>
+    </noscript>
+  </body>
+</html>

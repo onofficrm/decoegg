@@ -1,5 +1,6 @@
 import { Gauge, FileText, Briefcase, Car, Wallet, ArrowRight, ShieldAlert } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { goConsult } from '../../lib/sitePages';
 
 export function DashboardSection() {
   const diagnosticItems = [
@@ -136,7 +137,7 @@ export function DashboardSection() {
           </h3>
           
           <div className="mt-8 flex justify-center">
-            <Button variant="primary" size="xl" onClick={() => window.location.href = '#consult-form'}>
+            <Button variant="primary" size="xl" onClick={() => goConsult()}>
               내 조건으로 차량예산 확인하기 <ArrowRight className="w-6 h-6 ml-2" />
             </Button>
           </div>

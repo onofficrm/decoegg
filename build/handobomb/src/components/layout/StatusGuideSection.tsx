@@ -1,8 +1,10 @@
 import { BookOpen, ArrowRight } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { focusPage } from '../../lib/sitePages';
 
 type GuideItem = {
   id: string;
+  path: string;
   label: string;
   title: string;
   summary: string;
@@ -13,6 +15,7 @@ type GuideItem = {
 const guides: GuideItem[] = [
   {
     id: 'guide-rehab',
+    path: '/guides/rehab',
     label: '개인회생',
     title: '개인회생 진행 중 중고차 할부',
     summary: '변제 회차·미납 여부·소득 유지 상태를 먼저 확인한 뒤, 무리하지 않는 월납 범위로 상담합니다.',
@@ -21,6 +24,7 @@ const guides: GuideItem[] = [
   },
   {
     id: 'guide-discharge',
+    path: '/guides/discharge',
     label: '면책 후',
     title: '개인회생·파산면책 이후 할부',
     summary: '면책 이후에는 금융 이력이 부족한 경우가 많아, 소득 증빙과 현실적인 예산이 핵심입니다.',
@@ -29,6 +33,7 @@ const guides: GuideItem[] = [
   },
   {
     id: 'guide-lowcredit',
+    path: '/guides/lowcredit',
     label: '저신용',
     title: '저신용·신용점수 낮은 경우',
     summary: '반복 조회보다 현재 소득과 월 납입 가능 금액을 먼저 맞추는 것이 중요합니다.',
@@ -37,6 +42,7 @@ const guides: GuideItem[] = [
   },
   {
     id: 'guide-rejected',
+    path: '/guides/rejected',
     label: '할부 거절',
     title: '기존 할부 거절 후 재상담',
     summary: '거절 경험만으로 단정하지 않고, 거절 사유와 현재 조건을 다시 정리합니다.',
@@ -74,9 +80,27 @@ export function StatusGuideSection({ onSelectStatus }: StatusGuideSectionProps) 
               id={guide.id}
               className="bg-brand-card border border-white/5 clip-chamfer p-6 sm:p-8 flex flex-col"
             >
-              <span className="text-xs font-bold text-brand-yellow mb-3">{guide.label}</span>
+              <a
+                href={guide.path}
+                className="text-xs font-bold text-brand-yellow mb-3 hover:underline w-fit"
+                onClick={(e) => {
+                  e.preventDefault();
+                  focusPage(guide.path);
+                }}
+              >
+                {guide.label}
+              </a>
               <h3 className="text-xl sm:text-2xl font-display font-black text-white mb-3 tracking-tight">
-                {guide.title}
+                <a
+                  href={guide.path}
+                  className="hover:text-brand-yellow transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    focusPage(guide.path);
+                  }}
+                >
+                  {guide.title}
+                </a>
               </h3>
               <p className="text-brand-body leading-relaxed mb-5">{guide.summary}</p>
               <ul className="space-y-2 mb-8 text-sm text-brand-body/90">
@@ -91,11 +115,7 @@ export function StatusGuideSection({ onSelectStatus }: StatusGuideSectionProps) 
                 <Button
                   variant="outline"
                   className="w-full sm:w-auto"
-                  onClick={() => {
-                    onSelectStatus?.(guide.mappedStatus);
-                    const el = document.getElementById('consult-form');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }}
+                  onClick={() => onSelectStatus?.(guide.mappedStatus)}
                 >
                   이 상태로 조건 확인 <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>

@@ -1,33 +1,41 @@
-import { useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 import { Phone, MessageCircle, ArrowRight, Menu, X } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { getConsultAvailability } from '../../lib/consultAvailability';
+import { focusPage, getNavPages } from '../../lib/sitePages';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const availability = getConsultAvailability();
+  const navLinks = getNavPages().map((p) => ({
+    name: p.navLabel as string,
+    href: p.path,
+  }));
 
-  const navLinks = [
-    { name: '월납 시뮬', href: '#payment-simulator' },
-    { name: '조건 확인', href: '#consult-form' },
-    { name: '상태 가이드', href: '#guides' },
-    { name: '상담 사례', href: '#cases' },
-    { name: '차량 찾기', href: '#garage' },
-    { name: 'FAQ', href: '#faq' },
-  ];
+  const onNavClick = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    focusPage(href);
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="h-24 flex items-center justify-between">
           {/* Logo */}
-          <div className="flex flex-col justify-center cursor-pointer mt-1" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <a
+            href="/"
+            className="flex flex-col justify-center cursor-pointer mt-1"
+            onClick={(e) => {
+              e.preventDefault();
+              focusPage('/');
+            }}
+          >
             <div className="flex items-center">
               <span className="font-display font-black text-2xl md:text-3xl tracking-tighter text-white italic">
                 한도폭발
               </span>
               <span className="relative flex items-center justify-center ml-1">
-                {/* background shape for '카' */}
                 <span className="absolute inset-0 bg-brand-yellow -skew-x-12 rounded-sm" />
                 <span className="relative z-10 font-display font-black text-xl md:text-2xl text-brand-bg italic px-1.5 py-0.5 flex items-center gap-0.5">
                   카
@@ -38,14 +46,15 @@ export function Header() {
             <span className="text-[11px] text-brand-body/80 font-medium tracking-tight mt-1 hidden sm:block">
               신용점수가 아닌, 가능한 조건을 끝까지 확인합니다
             </span>
-          </div>
+          </a>
 
           {/* Desktop Navigation */}
-          <nav className="hidden xl:flex items-center gap-8">
+          <nav className="hidden xl:flex items-center gap-8" aria-label="주요 메뉴">
             {navLinks.map((link) => (
               <a 
                 key={link.name} 
                 href={link.href}
+                onClick={(e) => onNavClick(e, link.href)}
                 className="text-sm font-medium text-brand-body hover:text-white relative group py-2"
               >
                 {link.name}
@@ -81,6 +90,7 @@ export function Header() {
             <button 
               className="text-white p-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
             >
               {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
             </button>
@@ -97,7 +107,7 @@ export function Header() {
                 key={link.name}
                 href={link.href}
                 className="block px-3 py-4 text-base font-medium text-white border-b border-white/5 hover:text-brand-yellow hover:bg-white/5 transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={(e) => onNavClick(e, link.href)}
               >
                 {link.name}
               </a>

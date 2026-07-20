@@ -1,4 +1,5 @@
 import { ShieldCheck, Info } from 'lucide-react';
+import { focusPage } from '../../lib/sitePages';
 
 export function Footer() {
   return (
@@ -34,11 +35,33 @@ export function Footer() {
           <div>
             <h3 className="font-bold text-white mb-6">약관 및 정책</h3>
             <ul className="space-y-3 text-sm text-brand-body">
-              <li><a href="#" className="hover:text-white transition-colors">회사소개</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">이용약관</a></li>
-              <li><a href="#" className="hover:text-white transition-colors font-bold">개인정보처리방침</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">중고차 구매 유의사항</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">금융상품 이용 안내</a></li>
+              <li><a href="/page/about.php" className="hover:text-white transition-colors">회사소개</a></li>
+              <li><a href="/page/service.php" className="hover:text-white transition-colors">이용약관</a></li>
+              <li><a href="/page/privacy.php" className="hover:text-white transition-colors font-bold">개인정보처리방침</a></li>
+              <li>
+                <a
+                  href="/process"
+                  className="hover:text-white transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    focusPage('/process');
+                  }}
+                >
+                  중고차 구매 유의사항
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/finance"
+                  className="hover:text-white transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    focusPage('/finance');
+                  }}
+                >
+                  금융상품 이용 안내
+                </a>
+              </li>
             </ul>
           </div>
         </div>

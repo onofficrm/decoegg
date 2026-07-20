@@ -1,6 +1,7 @@
 import { ArrowRight, Phone, MessageCircle, ShieldCheck, Gauge, Zap } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { getConsultAvailability } from '../../lib/consultAvailability';
+import { goConsult } from '../../lib/sitePages';
 
 export function Hero() {
   const availability = getConsultAvailability();
@@ -74,7 +75,7 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button variant="primary" size="lg" className="w-full sm:w-auto" onClick={() => document.getElementById('consult-form')?.scrollIntoView({ behavior: 'smooth' })}>
+              <Button variant="primary" size="lg" className="w-full sm:w-auto" onClick={() => goConsult()}>
                 내 차량구매 조건 확인하기 <ArrowRight className="w-5 h-5 ml-1" />
               </Button>
               <Button variant="accent" size="lg" className="w-full sm:w-auto" onClick={() => window.location.href = 'tel:18004959'}>

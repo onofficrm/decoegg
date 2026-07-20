@@ -1,0 +1,6 @@
+<IfModule mod_mime.c>
+  ForceType text/html
+</IfModule>
+<IfModule mod_headers.c>
+  Header set Content-Type "text/html; charset=utf-8"
+</IfModule>

@@ -109,9 +109,6 @@ export function PaymentSimulatorSection({ onApplyToConsult }: PaymentSimulatorSe
       vehicleType: vehicleLabel,
       message,
     });
-
-    const el = document.getElementById('consult-form');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   const termOptions = [24, 36, 48, 60];

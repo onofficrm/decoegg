@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Phone, MessageCircle, X, ArrowRight } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { getConsultAvailability } from '../../lib/consultAvailability';
+import { goConsult } from '../../lib/sitePages';
 
 const STORAGE_KEY = 'handobomb_exit_cta_shown';
 
@@ -87,7 +88,7 @@ export function ExitIntentPopup() {
             size="lg"
             onClick={() => {
               setOpen(false);
-              document.getElementById('consult-form')?.scrollIntoView({ behavior: 'smooth' });
+              goConsult();
             }}
           >
             조건 확인 신청하기 <ArrowRight className="w-5 h-5 ml-2" />

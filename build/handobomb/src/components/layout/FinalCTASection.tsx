@@ -1,5 +1,6 @@
 import { ArrowRight, Phone, MessageCircle, FileText, CheckCircle2 } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { goConsult } from '../../lib/sitePages';
 
 export function FinalCTASection() {
   return (
@@ -39,7 +40,7 @@ export function FinalCTASection() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button variant="primary" size="lg" className="w-full sm:w-auto text-black" onClick={() => window.location.href = '#consult-form'}>
+              <Button variant="primary" size="lg" className="w-full sm:w-auto text-black" onClick={() => goConsult()}>
                 내 조건 확인 신청 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </div>

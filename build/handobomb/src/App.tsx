@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { Hero } from './components/layout/Hero';
@@ -19,6 +19,12 @@ import { FinalCTASection } from './components/layout/FinalCTASection';
 import { MobileBottomNav } from './components/layout/MobileBottomNav';
 import { PCFloatingNav } from './components/layout/PCFloatingNav';
 import { ExitIntentPopup } from './components/layout/ExitIntentPopup';
+import {
+  applyDocumentMeta,
+  getPageByPath,
+  goConsult,
+  scrollToPageSection,
+} from './lib/sitePages';
 
 export default function App() {
   const [selectedStatus, setSelectedStatus] = useState<string>('');
@@ -29,17 +35,34 @@ export default function App() {
   });
   const [prefillKey, setPrefillKey] = useState(0);
 
+  useEffect(() => {
+    const page = getPageByPath(window.location.pathname);
+    applyDocumentMeta(page);
+    const timer = window.setTimeout(() => {
+      scrollToPageSection(page, page.path === '/' ? 'auto' : 'smooth');
+    }, 120);
+
+    const onPopState = () => {
+      const next = getPageByPath(window.location.pathname);
+      applyDocumentMeta(next);
+      scrollToPageSection(next, 'smooth');
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener('popstate', onPopState);
+    };
+  }, []);
+
   const handleStatusSelect = (status: string) => {
     setSelectedStatus(status);
-    const formElement = document.getElementById('consult-form');
-    if (formElement) {
-      formElement.scrollIntoView({ behavior: 'smooth' });
-    }
+    goConsult();
   };
 
   const handleSimApply = (prefill: SimulatorPrefill) => {
     setSimPrefill(prefill);
     setPrefillKey((k) => k + 1);
+    goConsult();
   };
 
   return (

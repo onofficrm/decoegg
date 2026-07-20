@@ -1,18 +1,31 @@
 # 이 호스팅은 .html 요청이 PHP로 넘어가 MySQL 대기(504)에 걸립니다.
-# 정적 랜딩은 .txt + text/html 로 제공합니다.
-DirectoryIndex css/landing.txt index.php
+# 정적 랜딩은 css/landing/*.txt + text/html 로 제공합니다. (페이지별 SEO 셸)
+DirectoryIndex css/landing/home.txt css/landing.txt index.php
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteRule ^$ css/landing.txt [L]
+  RewriteRule ^$ css/landing/home.txt [L,T=text/html]
+  RewriteRule ^payment-simulator/?$ css/landing/payment-simulator.txt [L,T=text/html]
+  RewriteRule ^consult/?$ css/landing/consult.txt [L,T=text/html]
+  RewriteRule ^guides/?$ css/landing/guides.txt [L,T=text/html]
+  RewriteRule ^guides/rehab/?$ css/landing/guides-rehab.txt [L,T=text/html]
+  RewriteRule ^guides/discharge/?$ css/landing/guides-discharge.txt [L,T=text/html]
+  RewriteRule ^guides/lowcredit/?$ css/landing/guides-lowcredit.txt [L,T=text/html]
+  RewriteRule ^guides/rejected/?$ css/landing/guides-rejected.txt [L,T=text/html]
+  RewriteRule ^finance/?$ css/landing/finance.txt [L,T=text/html]
+  RewriteRule ^cases/?$ css/landing/cases.txt [L,T=text/html]
+  RewriteRule ^garage/?$ css/landing/garage.txt [L,T=text/html]
+  RewriteRule ^process/?$ css/landing/process.txt [L,T=text/html]
+  RewriteRule ^consult-status/?$ css/landing/consult-status.txt [L,T=text/html]
+  RewriteRule ^faq/?$ css/landing/faq.txt [L,T=text/html]
 </IfModule>
 
+# 홈 호환 경로 (css/landing.txt)
 <IfModule mod_headers.c>
   <Files "landing.txt">
     Header set Content-Type "text/html; charset=utf-8"
   </Files>
 </IfModule>
-
 <IfModule mod_mime.c>
   <Files "landing.txt">
     ForceType text/html

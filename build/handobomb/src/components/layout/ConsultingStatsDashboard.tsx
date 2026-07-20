@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Calendar, Users, CheckCircle2, ArrowRight, Phone, MessageCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { goConsult } from '../../lib/sitePages';
 
 // --- Custom CountUp Hook ---
 function useCountUp(end: number, duration: number = 2000) {
@@ -249,7 +250,7 @@ export function ConsultingStatsDashboard() {
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button variant="primary" size="lg" className="w-full sm:w-auto text-black" onClick={() => window.location.href = '#consult-form'}>
+              <Button variant="primary" size="lg" className="w-full sm:w-auto text-black" onClick={() => goConsult()}>
                 내 조건 확인 시작 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button variant="accent" size="lg" className="w-full sm:w-auto" onClick={() => window.location.href = 'tel:18004959'}>

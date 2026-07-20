@@ -1,14 +1,29 @@
 import { Home, FileSearch, Phone, MessageCircle } from 'lucide-react';
+import { focusPage } from '../../lib/sitePages';
 
 export function MobileBottomNav() {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-black/95 backdrop-blur-md border-t border-white/10 pb-safe">
       <div className="flex items-center justify-between h-[72px]">
-        <a href="#" className="flex-1 flex flex-col items-center justify-center text-brand-body hover:text-white transition-colors h-full">
+        <a
+          href="/"
+          className="flex-1 flex flex-col items-center justify-center text-brand-body hover:text-white transition-colors h-full"
+          onClick={(e) => {
+            e.preventDefault();
+            focusPage('/');
+          }}
+        >
           <Home className="w-6 h-6 mb-1" />
           <span className="text-[10px] font-bold">홈</span>
         </a>
-        <a href="#payment-simulator" className="flex-1 flex flex-col items-center justify-center text-brand-body hover:text-white transition-colors h-full">
+        <a
+          href="/payment-simulator"
+          className="flex-1 flex flex-col items-center justify-center text-brand-body hover:text-white transition-colors h-full"
+          onClick={(e) => {
+            e.preventDefault();
+            focusPage('/payment-simulator');
+          }}
+        >
           <FileSearch className="w-6 h-6 mb-1" />
           <span className="text-[10px] font-bold">월납 계산</span>
         </a>

@@ -1,10 +1,7 @@
 import { Phone, MessageCircle, FileSearch, Car, ArrowUp } from 'lucide-react';
+import { focusPage } from '../../lib/sitePages';
 
 export function PCFloatingNav() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <div className="hidden md:flex flex-col gap-3 fixed top-1/2 right-6 -translate-y-1/2 z-50">
       <a 
@@ -30,7 +27,11 @@ export function PCFloatingNav() {
       </a>
 
       <a 
-        href="#consult-form"
+        href="/consult"
+        onClick={(e) => {
+          e.preventDefault();
+          focusPage('/consult');
+        }}
         className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-brand-card border border-white/20 text-white shadow-lg hover:border-brand-yellow hover:text-brand-yellow transition-all"
       >
         <FileSearch className="w-6 h-6" />
@@ -40,7 +41,11 @@ export function PCFloatingNav() {
       </a>
 
       <a 
-        href="#garage"
+        href="/garage"
+        onClick={(e) => {
+          e.preventDefault();
+          focusPage('/garage');
+        }}
         className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-brand-card border border-white/20 text-white shadow-lg hover:border-brand-yellow hover:text-brand-yellow transition-all"
       >
         <Car className="w-6 h-6" />
@@ -50,7 +55,8 @@ export function PCFloatingNav() {
       </a>
 
       <button 
-        onClick={scrollToTop}
+        type="button"
+        onClick={() => focusPage('/')}
         className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-brand-card border border-white/20 text-brand-body shadow-lg hover:bg-white/10 transition-all mt-4"
       >
         <ArrowUp className="w-6 h-6" />

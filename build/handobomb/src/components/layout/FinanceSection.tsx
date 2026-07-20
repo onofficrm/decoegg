@@ -1,6 +1,7 @@
 import { Car, FileCheck, ShieldPlus, Zap, ArrowRight, MessageCircle, AlertCircle, Plus } from 'lucide-react';
 import { Button } from '../ui/Button';
 import React from 'react';
+import { goConsult } from '../../lib/sitePages';
 
 export function FinanceSection() {
   const modules = [
@@ -99,7 +100,7 @@ export function FinanceSection() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-          <Button variant="primary" size="xl" className="w-full sm:w-auto" onClick={() => window.location.href = '#consult-form'}>
+          <Button variant="primary" size="xl" className="w-full sm:w-auto" onClick={() => goConsult()}>
             차량과 자금 조건 확인하기 <ArrowRight className="w-6 h-6 ml-2" />
           </Button>
           <Button variant="outline" size="xl" className="w-full sm:w-auto !border-brand-yellow/30 hover:!bg-brand-yellow/10" onClick={() => window.open('https://open.kakao.com/o/seC75DCi', '_blank')}>

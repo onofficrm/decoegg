@@ -1,5 +1,6 @@
 import { CheckSquare, ArrowRight, PenTool } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { goConsult } from '../../lib/sitePages';
 
 export function CustomerCheckpointsSection() {
   const customerTypes = [
@@ -74,7 +75,7 @@ export function CustomerCheckpointsSection() {
               </div>
 
               <div className="mt-auto pt-6 border-t border-white/5 border-dashed relative z-10">
-                <Button variant="outline" fullWidth onClick={() => window.location.href = '#consult-form'}>
+                <Button variant="outline" fullWidth onClick={() => goConsult()}>
                   내 상황 상담받기 <ArrowRight className="w-4 h-4 ml-1" />
                 </Button>
               </div>

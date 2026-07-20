@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FileText, ArrowRight, ShieldCheck, ExternalLink } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { goConsult } from '../../lib/sitePages';
 
 type CaseItem = {
   id: number | string;
@@ -264,7 +265,7 @@ export function ConsultReportSection() {
               상담 사례 전체 보기 <ExternalLink className="w-5 h-5 ml-2" />
             </Button>
           )}
-          <Button variant="primary" size="lg" onClick={() => (window.location.href = '#consult-form')}>
+          <Button variant="primary" size="lg" onClick={() => goConsult()}>
             내 조건으로 진단 리포트 받아보기 <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
         </div>
