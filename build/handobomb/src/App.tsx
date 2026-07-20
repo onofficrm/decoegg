@@ -7,12 +7,13 @@ import { DashboardSection } from './components/layout/DashboardSection';
 import { LiveConsultingDashboard } from './components/layout/LiveConsultingDashboard';
 import { ConsultingStatsDashboard } from './components/layout/ConsultingStatsDashboard';
 import { FinanceSection } from './components/layout/FinanceSection';
-import { PaymentSimulatorSection } from './components/layout/PaymentSimulatorSection';
+import { PaymentSimulatorSection, SimulatorPrefill } from './components/layout/PaymentSimulatorSection';
 import { CustomerCheckpointsSection } from './components/layout/CustomerCheckpointsSection';
 import { VehicleGarageSection } from './components/layout/VehicleGarageSection';
 import { ConsultStatusSection } from './components/layout/ConsultStatusSection';
 import { ProcessTimelineSection } from './components/layout/ProcessTimelineSection';
 import { ConsultReportSection } from './components/layout/ConsultReportSection';
+import { StatusGuideSection } from './components/layout/StatusGuideSection';
 import { FAQSection } from './components/layout/FAQSection';
 import { ConsultForm } from './components/layout/ConsultForm';
 import { FinalCTASection } from './components/layout/FinalCTASection';
@@ -21,14 +22,24 @@ import { PCFloatingNav } from './components/layout/PCFloatingNav';
 
 export default function App() {
   const [selectedStatus, setSelectedStatus] = useState<string>('');
+  const [simPrefill, setSimPrefill] = useState<SimulatorPrefill>({
+    monthlyPayment: '',
+    vehicleType: '',
+    message: '',
+  });
+  const [prefillKey, setPrefillKey] = useState(0);
 
   const handleStatusSelect = (status: string) => {
     setSelectedStatus(status);
-    // Scroll to form smoothly
     const formElement = document.getElementById('consult-form');
     if (formElement) {
       formElement.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleSimApply = (prefill: SimulatorPrefill) => {
+    setSimPrefill(prefill);
+    setPrefillKey((k) => k + 1);
   };
 
   return (
@@ -38,10 +49,17 @@ export default function App() {
       <main className="flex-grow pt-24">
         <Hero />
         <DiagnosticSection onSelectStatus={handleStatusSelect} />
+        <StatusGuideSection onSelectStatus={handleStatusSelect} />
         <DashboardSection />
         <FinanceSection />
-        <PaymentSimulatorSection />
-        <ConsultForm initialStatus={selectedStatus} />
+        <PaymentSimulatorSection onApplyToConsult={handleSimApply} />
+        <ConsultForm
+          initialStatus={selectedStatus}
+          initialMonthlyPayment={simPrefill.monthlyPayment}
+          initialVehicleType={simPrefill.vehicleType}
+          initialMessage={simPrefill.message}
+          prefillKey={prefillKey}
+        />
         <LiveConsultingDashboard />
         <ConsultingStatsDashboard />
         <VehicleGarageSection />
@@ -57,5 +75,3 @@ export default function App() {
     </div>
   );
 }
-
-

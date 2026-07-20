@@ -45,6 +45,8 @@ $site_config = array(
     'inquiry_thanks_url'      => '/page/inquiry-thanks.php',
     /* 상담 사례 게시판 (proc/cases-list.php → 홈 SPA) */
     'cases_bo_table'          => 'cases',
+    /* 추천 차량 갤러리 (proc/vehicles-list.php → 홈 SPA) */
+    'vehicles_bo_table'       => 'vehicles',
     /* 전환·방문 추적 ID — 비우면 출력 안 함 */
     'gtm_id'              => '',
     'ga4_id'              => '',

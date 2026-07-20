@@ -29,7 +29,32 @@ function formatMan(value: number) {
   return man.toLocaleString('ko-KR') + '만원';
 }
 
-export function PaymentSimulatorSection() {
+export type SimulatorPrefill = {
+  monthlyPayment: string;
+  vehicleType?: string;
+  message: string;
+};
+
+function mapMonthlyLabel(monthly: number): string {
+  if (monthly <= 300000) return '30만원 이하';
+  if (monthly <= 500000) return '30만~50만원';
+  if (monthly <= 700000) return '50만~70만원';
+  return '70만원 이상';
+}
+
+function mapVehicleTypeByPrice(price: number): string {
+  if (price < 10000000) return '경차';
+  if (price < 18000000) return '준중형';
+  if (price < 28000000) return '중형';
+  if (price < 40000000) return 'SUV';
+  return '상담 후 결정';
+}
+
+interface PaymentSimulatorSectionProps {
+  onApplyToConsult?: (prefill: SimulatorPrefill) => void;
+}
+
+export function PaymentSimulatorSection({ onApplyToConsult }: PaymentSimulatorSectionProps) {
   const [mode, setMode] = useState<SimMode>('byBudget');
   const [vehiclePrice, setVehiclePrice] = useState(15000000);
   const [downPayment, setDownPayment] = useState(2000000);
@@ -67,6 +92,24 @@ export function PaymentSimulatorSection() {
   }, [mode, vehiclePrice, downPayment, monthlyBudget, months, annualRate]);
 
   const goConsult = () => {
+    const monthlyLabel = mapMonthlyLabel(result.monthly);
+    const vehicleLabel = mapVehicleTypeByPrice(result.maxVehicle);
+    const message = [
+      '[월납 시뮬 결과]',
+      `모드: ${mode === 'byBudget' ? '월납→차량가' : '차량가→월납'}`,
+      `예상 월납: ${formatWon(result.monthly)}`,
+      `검토 차량가: ${formatMan(result.maxVehicle)}`,
+      `선수금: ${formatMan(Math.min(downPayment, mode === 'byPrice' ? vehiclePrice : downPayment))}`,
+      `기간: ${months}개월`,
+      `참고 연이율: ${annualRate}%`,
+    ].join('\n');
+
+    onApplyToConsult?.({
+      monthlyPayment: monthlyLabel,
+      vehicleType: vehicleLabel,
+      message,
+    });
+
     const el = document.getElementById('consult-form');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };

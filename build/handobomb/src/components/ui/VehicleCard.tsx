@@ -1,5 +1,5 @@
 import React from 'react';
-import { Car, Fuel, Info, Phone } from 'lucide-react';
+import { Fuel, Info, Phone } from 'lucide-react';
 import { Button } from './Button';
 
 interface VehicleCardProps {
@@ -11,6 +11,7 @@ interface VehicleCardProps {
   fuel: string;
   type: string;
   status: string;
+  href?: string;
 }
 
 export function VehicleCard({
@@ -20,7 +21,8 @@ export function VehicleCard({
   purpose,
   fuel,
   type,
-  status
+  status,
+  href,
 }: VehicleCardProps) {
   return (
     <div className="bg-brand-card border border-white/5 clip-chamfer overflow-hidden group hover:border-brand-yellow/30 transition-all duration-300 flex flex-col">
@@ -69,7 +71,13 @@ export function VehicleCard({
         
         {/* Actions */}
         <div className="flex gap-2 mt-auto">
-          <Button variant="ghost" className="flex-1 !px-2 border !border-white/10 hover:!border-white/30 text-sm py-2">
+          <Button
+            variant="ghost"
+            className="flex-1 !px-2 border !border-white/10 hover:!border-white/30 text-sm py-2"
+            onClick={() => {
+              if (href) window.location.href = href;
+            }}
+          >
             <Info className="w-4 h-4 mr-1" /> 자세히
           </Button>
           <Button variant="primary" className="flex-1 text-sm !px-2 py-2" onClick={() => window.location.href = '#consult-form'}>

@@ -5,12 +5,23 @@ import { Button } from '../ui/Button';
 
 interface ConsultFormProps {
   initialStatus?: string;
+  initialMonthlyPayment?: string;
+  initialVehicleType?: string;
+  initialMessage?: string;
+  prefillKey?: number;
 }
 
-export function ConsultForm({ initialStatus = '' }: ConsultFormProps) {
+export function ConsultForm({
+  initialStatus = '',
+  initialMonthlyPayment = '',
+  initialVehicleType = '',
+  initialMessage = '',
+  prefillKey = 0,
+}: ConsultFormProps) {
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [simBanner, setSimBanner] = useState('');
 
   const [formData, setFormData] = useState({
     status: initialStatus,
@@ -33,6 +44,24 @@ export function ConsultForm({ initialStatus = '' }: ConsultFormProps) {
       setFormData(prev => ({ ...prev, status: initialStatus }));
     }
   }, [initialStatus]);
+
+  useEffect(() => {
+    if (!prefillKey) return;
+    setFormData(prev => ({
+      ...prev,
+      monthlyPayment: initialMonthlyPayment || prev.monthlyPayment,
+      vehicleType: initialVehicleType || prev.vehicleType,
+      message: initialMessage
+        ? prev.message
+          ? `${initialMessage}\n\n${prev.message}`
+          : initialMessage
+        : prev.message,
+    }));
+    if (initialMonthlyPayment || initialMessage) {
+      setSimBanner('월납 시뮬 결과가 상담 신청에 반영되었습니다. 나머지 조건을 이어서 선택해 주세요.');
+      setStep(2);
+    }
+  }, [prefillKey, initialMonthlyPayment, initialVehicleType, initialMessage]);
 
   const updateForm = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -232,6 +261,11 @@ export function ConsultForm({ initialStatus = '' }: ConsultFormProps) {
             간편 조건 확인
           </h2>
           <p className="text-brand-body">내게 맞는 정확한 솔루션을 위해 조건을 선택해주세요.</p>
+          {simBanner && (
+            <p className="mt-4 inline-block text-sm font-bold text-brand-yellow bg-brand-yellow/10 border border-brand-yellow/30 px-4 py-2">
+              {simBanner}
+            </p>
+          )}
         </div>
 
         <div className="bg-brand-card border border-white/5 clip-chamfer p-6 sm:p-10 relative">
