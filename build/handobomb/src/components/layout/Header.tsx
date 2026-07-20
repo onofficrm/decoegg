@@ -8,9 +8,9 @@ export function Header() {
   const navLinks = [
     { name: '월납 시뮬', href: '#payment-simulator' },
     { name: '조건 확인', href: '#consult-form' },
+    { name: '상담 사례', href: '#cases' },
     { name: '차량 찾기', href: '#garage' },
     { name: '추가자금', href: '#finance' },
-    { name: '진행 절차', href: '#process' },
     { name: 'FAQ', href: '#faq' },
   ];
 
