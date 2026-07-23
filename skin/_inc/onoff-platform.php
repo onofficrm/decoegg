@@ -90,6 +90,22 @@ if (!function_exists('onoff_platform_member_top_bar')) {
     }
 }
 
+if (!function_exists('onoff_platform_member_brand_html')) {
+    /** 브랜드명 HTML (한도폭발카 → 카 강조) */
+    function onoff_platform_member_brand_html($brand)
+    {
+        $brand = (string) $brand;
+        if (function_exists('mb_substr') && mb_substr($brand, -1, 1, 'UTF-8') === '카' && mb_strlen($brand, 'UTF-8') > 1) {
+            $head = mb_substr($brand, 0, -1, 'UTF-8');
+
+            return htmlspecialchars($head, ENT_QUOTES, 'UTF-8')
+                . '<span class="onoff-accent">카</span>';
+        }
+
+        return htmlspecialchars($brand, ENT_QUOTES, 'UTF-8');
+    }
+}
+
 if (!function_exists('onoff_platform_member_brand')) {
     /** 로그인 박스 내 사이트명 + 페이지 부제 */
     function onoff_platform_member_brand($page_label = '')
@@ -104,8 +120,8 @@ if (!function_exists('onoff_platform_member_brand')) {
         $label = $label !== '' ? $label : $brand;
 
         echo '<div class="onoff-platform__brand">';
-        echo '<p class="onoff-platform__eyebrow">MEMBER</p>';
-        echo '<p class="onoff-platform__brand-name">' . htmlspecialchars($brand, ENT_QUOTES, 'UTF-8') . '</p>';
+        echo '<p class="onoff-platform__eyebrow">ACCOUNT</p>';
+        echo '<p class="onoff-platform__brand-name">' . onoff_platform_member_brand_html($brand) . '</p>';
         echo '<p class="onoff-platform__page-label">' . htmlspecialchars($label, ENT_QUOTES, 'UTF-8') . '</p>';
         echo '</div>';
     }

@@ -506,8 +506,14 @@ if (!function_exists('onoff_platform_skin_override_paths')) {
         }
 
         $skin = trim(g5site_cfg('platform_member_skin', ''));
-        if ($skin === '' || !is_dir(G5_SKIN_PATH . '/member/' . preg_replace('/[^a-z0-9_-]/', '', $skin))) {
+        $skin = preg_replace('/[^a-z0-9_-]/', '', $skin);
+        if ($skin === '' || !is_dir(G5_SKIN_PATH . '/member/' . $skin)) {
             return;
+        }
+
+        if (is_array($config)) {
+            $config['cf_member_skin'] = $skin;
+            $config['cf_mobile_member_skin'] = $skin;
         }
 
         if (function_exists('get_skin_path') && function_exists('get_skin_url')) {

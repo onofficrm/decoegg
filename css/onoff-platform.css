@@ -2,27 +2,63 @@
 
 /**
  * 온오프 그누보드 플랫폼 — 공통 UI (회원·게시판 스킨)
+ * 한도폭발카 브랜드 톤
  * @onoff-platform-managed
  */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap");
 @import url("icrm-design-tokens.css");
 
 :root {
-  --onoff-accent: #071d34;
-  --onoff-accent-hover: #031426;
-  --onoff-accent-soft: #f7f9fc;
-  --onoff-gold: #b8944f;
-  --onoff-gold-soft: #efe4cf;
-  --onoff-radius: 28px;
-  --onoff-radius-md: 16px;
-  --onoff-radius-sm: 12px;
-  --onoff-shadow: 0 34px 90px rgba(7, 29, 52, 0.16);
-  --onoff-font: var(--icrm-font, 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  --onoff-bg: #0d1015;
+  --onoff-bg-elevated: #171b22;
+  --onoff-bg-soft: #1c222c;
+  --onoff-accent: #e8ff3f;
+  --onoff-accent-hover: #f3ff7a;
+  --onoff-accent-soft: rgba(232, 255, 63, 0.12);
+  --onoff-orange: #ff5a1f;
+  --onoff-gold: #e8ff3f;
+  --onoff-gold-soft: rgba(232, 255, 63, 0.14);
+  --onoff-text: #ffffff;
+  --onoff-text-muted: #9ca3af;
+  --onoff-border: rgba(255, 255, 255, 0.08);
+  --onoff-border-strong: rgba(255, 255, 255, 0.14);
+  --onoff-radius: 24px;
+  --onoff-radius-md: 14px;
+  --onoff-radius-sm: 10px;
+  --onoff-shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+  --onoff-font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --onoff-display: "Space Grotesk", "Pretendard Variable", Pretendard, sans-serif;
 }
 
 .onoff-platform {
   font-family: var(--onoff-font);
-  color: var(--icrm-text, #18181b);
+  color: var(--onoff-text);
   line-height: 1.55;
+}
+
+/* 회원 화면: 사이트 기본 헤더/푸터 숨김 */
+body:has(.onoff-platform--member) #hd,
+body:has(.onoff-platform--member) #tnb,
+body:has(.onoff-platform--member) #ft,
+body:has(.onoff-platform--member) #container_title,
+body:has(.onoff-platform--member) .btn_top {
+  display: none !important;
+}
+
+body:has(.onoff-platform--member) {
+  background: var(--onoff-bg) !important;
+}
+
+body:has(.onoff-platform--member) #wrapper,
+body:has(.onoff-platform--member) #container,
+body:has(.onoff-platform--member) #wrapper_title {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  min-width: 0 !important;
+  width: 100% !important;
 }
 
 .onoff-platform--member {
@@ -30,10 +66,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 548px;
-  min-height: calc(100vh - 72px);
+  max-width: 520px;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 36px 20px;
+  padding: 40px 20px 48px;
+  box-sizing: border-box;
 }
 
 .onoff-platform--member:before {
@@ -43,22 +80,23 @@
   z-index: -2;
   pointer-events: none;
   background:
-    radial-gradient(circle at 16% 12%, rgba(184, 148, 79, 0.18), transparent 28%),
-    radial-gradient(circle at 82% 16%, rgba(7, 29, 52, 0.14), transparent 32%),
-    linear-gradient(135deg, #f7f4ed 0%, #f6f8fb 48%, #eef3f8 100%);
+    radial-gradient(ellipse 70% 50% at 12% 8%, rgba(232, 255, 63, 0.14), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 92% 18%, rgba(255, 90, 31, 0.16), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(232, 255, 63, 0.05), transparent 55%),
+    linear-gradient(165deg, #0d1015 0%, #12161e 48%, #0a0c10 100%);
 }
 
 .onoff-platform--member:after {
   content: "";
   position: fixed;
-  inset: 18px;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 32px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.62), transparent 42%),
-    linear-gradient(315deg, rgba(7, 29, 52, 0.04), transparent 38%);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 20%, transparent 75%);
 }
 
 .onoff-platform__top {
@@ -70,33 +108,14 @@
   align-items: center;
   gap: 8px;
   padding: 8px 14px;
-  border: 1px solid rgba(13, 148, 136, 0.16);
+  border: 1px solid var(--onoff-border-strong);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
-  backdrop-filter: blur(12px);
+  background: rgba(23, 27, 34, 0.72);
   font-size: 0.94rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--icrm-text, #18181b);
+  color: var(--onoff-text);
   text-decoration: none;
-  transition: border-color 0.15s, box-shadow 0.15s, color 0.15s, transform 0.15s;
-}
-
-.onoff-platform__top-link:before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--onoff-accent);
-  box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.12);
-}
-
-.onoff-platform__top-link:hover {
-  border-color: rgba(13, 148, 136, 0.34);
-  color: var(--onoff-accent);
-  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.1);
-  transform: translateY(-1px);
 }
 
 .onoff-platform__brand {
@@ -112,94 +131,99 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 28px;
+  min-height: 26px;
   margin: 0 0 14px;
-  padding: 0 13px;
-  border: 1px solid rgba(184, 148, 79, 0.28);
+  padding: 0 12px;
+  border: 1px solid rgba(232, 255, 63, 0.28);
   border-radius: 999px;
-  background: rgba(184, 148, 79, 0.08);
-  color: var(--onoff-gold);
-  font-size: 0.74rem;
-  font-weight: 900;
-  letter-spacing: 0.24em;
+  background: var(--onoff-accent-soft);
+  color: var(--onoff-accent);
+  font-family: var(--onoff-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
   line-height: 1;
+  text-transform: uppercase;
 }
 
 .onoff-platform__brand-name {
   margin: 0;
-  font-size: 2.35rem;
-  font-weight: 900;
-  letter-spacing: -0.055em;
+  font-family: var(--onoff-display);
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #fff;
+  line-height: 1.15;
+}
+
+.onoff-platform__brand-name .onoff-accent {
   color: var(--onoff-accent);
-  line-height: 1.2;
 }
 
 .onoff-platform__page-label {
-  margin: 10px 0 0;
+  margin: 12px 0 0;
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.02em;
-  color: #7b8491;
+  color: var(--onoff-text-muted);
 }
 
 .onoff-platform__tabs {
   display: flex;
   gap: 0;
-  margin: 0 0 30px;
-  padding: 5px;
-  border: 0;
-  border-radius: 16px;
-  background: #f3f5f8;
-  box-shadow: inset 0 1px 3px rgba(7, 29, 52, 0.06);
+  margin: 0 0 28px;
+  padding: 4px;
+  border: 1px solid var(--onoff-border);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.28);
 }
 
 .onoff-platform__tab {
   flex: 1;
   display: block;
-  padding: 15px 8px;
-  border-radius: 12px;
+  padding: 14px 8px;
+  border-radius: 10px;
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.98rem;
   font-weight: 800;
-  color: #6b7280;
+  color: var(--onoff-text-muted);
   text-decoration: none;
   background: transparent;
   border: 0;
-  transition: background 0.15s, box-shadow 0.15s, color 0.15s;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
 }
 
 .onoff-platform__tab.is-active {
-  color: var(--onoff-accent);
-  background: #fff;
-  box-shadow: 0 8px 22px rgba(7, 29, 52, 0.1);
+  color: #0d1015;
+  background: var(--onoff-accent);
+  box-shadow: 0 8px 24px rgba(232, 255, 63, 0.22);
 }
 
 .onoff-platform__tab:not(.is-active):hover {
-  color: var(--onoff-accent);
+  color: #fff;
 }
 
 .onoff-platform__card {
   position: relative;
   overflow: hidden;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.94)),
-    #fff;
-  border: 1px solid rgba(255, 255, 255, 0.92);
+    linear-gradient(165deg, rgba(255, 255, 255, 0.04), transparent 42%),
+    var(--onoff-bg-elevated);
+  border: 1px solid var(--onoff-border-strong);
   border-radius: var(--onoff-radius);
   box-shadow: var(--onoff-shadow);
-  padding: 52px 44px 42px;
-  backdrop-filter: blur(18px);
+  padding: 44px 40px 36px;
 }
 
 .onoff-platform__card:before {
   content: "";
   position: absolute;
-  left: 34px;
-  right: 34px;
+  left: 28px;
+  right: 28px;
   top: 0;
-  height: 3px;
+  height: 2px;
   border-radius: 0 0 999px 999px;
-  background: linear-gradient(90deg, transparent, var(--onoff-gold), transparent);
+  background: linear-gradient(90deg, transparent, var(--onoff-accent), var(--onoff-orange), transparent);
 }
 
 .onoff-platform__title {
@@ -207,12 +231,13 @@
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.02em;
+  color: #fff;
 }
 
 .onoff-platform__sub {
   margin: 0 0 20px;
   font-size: 0.9rem;
-  color: var(--icrm-muted, #71717a);
+  color: var(--onoff-text-muted);
 }
 
 .onoff-platform__field {
@@ -225,7 +250,7 @@
   margin-bottom: 6px;
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--icrm-text-secondary, #3f3f46);
+  color: var(--onoff-text-muted);
 }
 
 .onoff-platform .frm_input,
@@ -233,19 +258,26 @@
 .onoff-platform input[type="password"],
 .onoff-platform input[type="email"],
 .onoff-platform input[type="tel"],
+.onoff-platform input[type="file"],
 .onoff-platform select,
 .onoff-platform textarea {
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid #dde4ee;
-  border-radius: 15px;
-  padding: 17px 18px;
-  min-height: 58px;
+  border: 1px solid var(--onoff-border-strong);
+  border-radius: 12px;
+  padding: 16px 16px;
+  min-height: 54px;
   font-size: 1rem;
   font-family: inherit;
-  color: var(--icrm-text, #18181b);
-  background: #fbfcfe;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.35);
   transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.onoff-platform .frm_input::placeholder,
+.onoff-platform input::placeholder,
+.onoff-platform textarea::placeholder {
+  color: rgba(156, 163, 175, 0.7);
 }
 
 .onoff-platform .frm_input:focus,
@@ -253,9 +285,9 @@
 .onoff-platform select:focus,
 .onoff-platform textarea:focus {
   outline: none;
-  background: #fff;
-  border-color: var(--onoff-accent);
-  box-shadow: 0 0 0 4px rgba(7, 29, 52, 0.1);
+  background: rgba(0, 0, 0, 0.45);
+  border-color: rgba(232, 255, 63, 0.55);
+  box-shadow: 0 0 0 3px rgba(232, 255, 63, 0.14);
 }
 
 .onoff-platform .btn_submit,
@@ -264,24 +296,23 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 60px;
+  min-height: 56px;
   margin-top: 16px;
   border: 0;
-  border-radius: 15px;
-  background: linear-gradient(135deg, #071d34 0%, #102f50 100%);
-  box-shadow: 0 18px 34px rgba(7, 29, 52, 0.22);
-  color: #fff;
-  font-size: 1.12rem;
+  border-radius: 12px;
+  background: var(--onoff-accent);
+  box-shadow: 0 14px 36px rgba(232, 255, 63, 0.22);
+  color: #0d1015;
+  font-size: 1.08rem;
   font-weight: 900;
   font-family: inherit;
   cursor: pointer;
-  transition: box-shadow 0.15s, filter 0.15s, transform 0.15s;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.15s;
 }
 
 .onoff-platform .btn_submit:hover {
-  background: linear-gradient(135deg, var(--onoff-accent-hover) 0%, #08243e 100%);
-  box-shadow: 0 22px 42px rgba(7, 29, 52, 0.28);
-  filter: none;
+  background: var(--onoff-accent-hover);
+  box-shadow: 0 18px 42px rgba(232, 255, 63, 0.28);
   transform: translateY(-1px);
 }
 
@@ -307,7 +338,7 @@
 .onoff-platform__divider {
   margin: 20px 0;
   border: 0;
-  border-top: 1px solid var(--icrm-border-light, #f4f4f5);
+  border-top: 1px solid var(--onoff-border);
 }
 
 .onoff-platform--board .board-wrap {
@@ -322,7 +353,7 @@
 .onoff-platform--board .board-actions__write {
   background: var(--onoff-accent) !important;
   border-color: var(--onoff-accent) !important;
-  color: #fff !important;
+  color: #0d1015 !important;
 }
 
 .onoff-platform #mb_login.mbskin,
@@ -349,6 +380,7 @@
   margin: 0 0 16px;
   font-size: 1.35rem;
   font-weight: 800;
+  color: #fff;
 }
 
 .onoff-platform #login_fs legend {
@@ -361,18 +393,18 @@
   display: block;
   width: auto;
   height: auto;
-  margin: 0 0 9px;
+  margin: 0 0 8px;
   padding: 0;
   overflow: visible;
   clip: auto;
-  font-size: 0.92rem;
-  font-weight: 900;
+  font-size: 0.88rem;
+  font-weight: 800;
   color: var(--onoff-accent);
   text-align: left;
 }
 
 .onoff-platform #mb_login label[for="login_pw"] {
-  margin-top: 20px;
+  margin-top: 18px;
 }
 
 .onoff-platform #mb_confirm .onoff-platform__brand {
@@ -382,11 +414,12 @@
 .onoff-platform #mb_confirm p {
   margin: 0 0 20px;
   padding: 16px;
-  border-radius: 16px;
-  background: #f6f7fb;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--onoff-border);
   font-size: 1rem;
   line-height: 1.6;
-  color: var(--icrm-text-secondary, #3f3f46);
+  color: var(--onoff-text-muted);
   text-align: center;
 }
 
@@ -401,7 +434,7 @@
   margin-bottom: 4px;
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--icrm-muted, #71717a);
+  color: var(--onoff-text-muted);
 }
 
 .onoff-platform #mb_confirm #mb_confirm_id {
@@ -409,9 +442,11 @@
   margin-bottom: 12px;
   padding: 12px 14px;
   border-radius: 12px;
-  background: #f8fafc;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--onoff-border);
   font-size: 1rem;
   font-weight: 700;
+  color: #fff;
 }
 
 .onoff-platform #find_info h3 {
@@ -419,12 +454,13 @@
   font-size: 1.05rem;
   font-weight: 800;
   text-align: left;
+  color: #fff;
 }
 
 .onoff-platform #find_info #info_fs p {
   margin: 0 0 20px;
   font-size: 1rem;
-  color: var(--icrm-muted, #71717a);
+  color: var(--onoff-text-muted);
   line-height: 1.55;
   text-align: left;
 }
@@ -440,22 +476,14 @@
   justify-content: space-between;
   gap: 8px;
   margin-top: 18px;
-  font-size: 0.94rem;
-  color: #6f7784;
+  font-size: 0.92rem;
+  color: var(--onoff-text-muted);
 }
 
 .onoff-platform #login_info a {
-  color: #596577;
+  color: #c4c9d4;
   text-decoration: none;
-  font-weight: 800;
-}
-
-.onoff-platform__footer {
-  margin: 28px 0 0;
-  text-align: center;
-  color: #87909d;
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-weight: 700;
 }
 
 .onoff-platform #login_info a:hover {
@@ -463,27 +491,36 @@
   text-decoration: none;
 }
 
+.onoff-platform__footer {
+  margin: 28px 0 0;
+  text-align: center;
+  color: rgba(156, 163, 175, 0.75);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
 .onoff-platform__outline-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 58px;
+  min-height: 54px;
   margin-top: 14px;
   box-sizing: border-box;
-  border: 1px solid #dde4ee;
-  border-radius: 15px;
-  background: rgba(255, 255, 255, 0.78);
-  color: var(--onoff-accent);
+  border: 1px solid var(--onoff-border-strong);
+  border-radius: 12px;
+  background: transparent;
+  color: #fff;
   font-size: 1rem;
-  font-weight: 900;
+  font-weight: 800;
   text-decoration: none;
-  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s, color 0.15s;
 }
 
 .onoff-platform__outline-btn:hover {
-  border-color: rgba(184, 148, 79, 0.45);
-  background: #fff;
+  border-color: rgba(232, 255, 63, 0.45);
+  background: var(--onoff-accent-soft);
+  color: var(--onoff-accent);
   transform: translateY(-1px);
 }
 
@@ -493,7 +530,7 @@
 
 .onoff-platform #fregister section {
   border-radius: var(--onoff-radius-sm);
-  border-color: var(--icrm-border, #e4e4e7);
+  border-color: var(--onoff-border);
 }
 
 .onoff-platform .profile_tbl {
@@ -504,34 +541,35 @@
 .onoff-platform .profile_tbl th,
 .onoff-platform .profile_tbl td {
   padding: 10px 12px;
-  border-bottom: 1px solid var(--icrm-border-light, #f4f4f5);
+  border-bottom: 1px solid var(--onoff-border);
   text-align: left;
+  color: var(--onoff-text-muted);
+}
+
+.onoff-platform .chk_box label,
+.onoff-platform .fregister_agree label {
+  color: var(--onoff-text-muted);
 }
 
 @media (max-width: 767px) {
   .onoff-platform--member {
     max-width: none;
-    min-height: calc(100vh - 24px);
+    min-height: 100vh;
     margin: 0 auto;
-    padding: 22px 16px;
-  }
-
-  .onoff-platform--member:after {
-    inset: 10px;
-    border-radius: 22px;
+    padding: 28px 16px 40px;
   }
 
   .onoff-platform__card {
-    padding: 42px 24px 30px;
-    border-radius: 24px;
+    padding: 36px 22px 28px;
+    border-radius: 20px;
   }
 
   .onoff-platform__brand-name {
-    font-size: 2rem;
+    font-size: 1.85rem;
   }
 
   .onoff-platform__tabs {
-    margin-bottom: 26px;
+    margin-bottom: 24px;
   }
 
   .onoff-platform #login_info {
