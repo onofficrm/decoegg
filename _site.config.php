@@ -119,8 +119,6 @@ $site_config = array(
     /* 회원 스킨 — 로그인/회원가입/정보수정 (skin/member/onoff) */
     'platform_member_skin'      => 'onoff',
     'platform_outlogin_skin'    => 'onoff',
-    'primary_color'             => '#E8FF3F',
-    'secondary_color'           => '#FF5A1F',
 );
 
 /**

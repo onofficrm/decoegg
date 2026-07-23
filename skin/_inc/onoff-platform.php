@@ -63,15 +63,29 @@ if (!function_exists('onoff_platform_outlogin_styles')) {
 
 if (!function_exists('onoff_platform_homepage_title')) {
     /**
-     * 기본환경설정(cf_title) 홈페이지 제목. 비어 있으면 온오프빌더.
+     * 사이트명 — _site.config site_name 우선, 없으면 cf_title
      */
     function onoff_platform_homepage_title()
     {
         global $config;
 
-        $title = isset($config['cf_title']) ? trim(get_text($config['cf_title'])) : '';
+        if (function_exists('g5site_cfg')) {
+            $site_name = trim(g5site_cfg('site_name', ''));
+            if ($site_name !== '') {
+                return $site_name;
+            }
+            $company = trim(g5site_cfg('company_name', ''));
+            if ($company !== '') {
+                return $company;
+            }
+        }
 
-        return $title !== '' ? $title : '온오프빌더';
+        $title = isset($config['cf_title']) ? trim(get_text($config['cf_title'])) : '';
+        if ($title !== '' && $title !== '그누보드5' && stripos($title, 'gnuboard') === false) {
+            return $title;
+        }
+
+        return '한도폭발카';
     }
 }
 
