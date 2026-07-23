@@ -506,6 +506,9 @@ if (!function_exists('onoff_platform_skin_override_paths')) {
         }
 
         $skin = trim(g5site_cfg('platform_member_skin', ''));
+        if ($skin === '' && trim(g5site_cfg('home_builder_bridge_id', '')) === 'handobomb') {
+            $skin = onoff_platform_skin_id_member();
+        }
         $skin = preg_replace('/[^a-z0-9_-]/', '', $skin);
         if ($skin === '' || !is_dir(G5_SKIN_PATH . '/member/' . $skin)) {
             return;
